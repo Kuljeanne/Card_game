@@ -1,0 +1,49 @@
+.complexity-level_title {
+    width: 208px;
+    text-align: center;
+}
+
+.complexity-level_choose {
+    display: flex;
+    flex-direction: column;
+    gap: 67px;
+    align-items: center;
+}
+
+.complexity-level_options {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    column-gap: 24px;
+
+}
+
+.complexity-level_option {
+    width: 98px;
+    height: 98px;
+    @include font($size: 6.4rem, $height: 7.2rem);
+    color: #0080C1;
+    background: #FFFFFF;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    @extend %transition;
+}
+
+.complexity-level_option:hover {
+    background: #0080C1;
+    color: #FFFFFF;
+    @extend %transition;
+}
+
+.complexity-level_options>input {
+    visibility: hidden;
+    position: absolute;
+}
+
+input:checked+label {
+    background: #0080C1;
+    color: #FFFFFF;
+}

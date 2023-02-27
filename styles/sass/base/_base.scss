@@ -1,0 +1,66 @@
+html {
+    font-size: 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+
+    background-color: $main-color;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+    @extend %font-main;
+    width: 100vw;
+    height: 100vh;
+}
+
+h2 {
+    @include font($size: 4rem, $height: 4.8rem);
+    color: $main-color;
+}
+
+button {
+    background-color: $btn-color;
+    color: $btn-text;
+    @include font($size: 2.4rem, $height: 3.2rem);
+    width: 246px;
+    height: 50px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: $btn-hover;
+}
+
+button:active {
+    transform: scale(.97);
+}
+
+.modal_wrapper {
+    width: 100vw;
+    height: 100vh;
+    background: $main-color;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal_block {
+    opacity: 1;
+    box-sizing: border-box;
+    width: 480px;
+    height: 459px;
+    background-color: $modal-color;
+    border-radius: 12px;
+    padding: 50px 69px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+}
