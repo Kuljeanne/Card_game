@@ -1,0 +1,134 @@
+@font-face {
+  font-family: "StratosSkyeng";
+  src: url("../../../src/fonts/statosskyeng-v1.001/Desktop fonts/stratosskyeng-regular.otf") format("OpenType"), url("../../../src/fonts/statosskyeng-v1.001/Web fonts/stratosskyengweb-regular.woff") format("woff"), url("../../../src/fonts/statosskyeng-v1.001/Web fonts/stratosskyengweb-regular.woff2") format("woff2"), url("../../../src/fonts/__MACOSX/statosskyeng-v1.001/Web fonts/._stratosskyengweb-regular.woff") format("woff"), url("../../../src/fonts/__MACOSX/statosskyeng-v1.001/Desktop fonts/._stratosskyeng-regular.otf") format("OpenType");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  font-family: "StratosSkyeng", Verdana, sans-serif;
+}
+
+.complexity-level_option:hover, .complexity-level_option {
+  transition: all 0.3s ease-in-out;
+}
+
+html {
+  font-size: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #004980;
+  font-feature-settings: "pnum" on, "lnum" on;
+  width: 100vw;
+  height: 100vh;
+}
+
+h2 {
+  font-size: 4rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 4.8rem;
+  color: #004980;
+}
+
+button {
+  background-color: #7AC100;
+  color: #FFFFFF;
+  font-size: 2.4rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 3.2rem;
+  width: 246px;
+  height: 50px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #74b406;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.modal_wrapper {
+  width: 100vw;
+  height: 100vh;
+  background: #004980;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal_block {
+  opacity: 1;
+  box-sizing: border-box;
+  width: 480px;
+  height: 459px;
+  background-color: #C2F5FF;
+  border-radius: 12px;
+  padding: 50px 69px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.complexity-level_title {
+  width: 208px;
+  text-align: center;
+}
+
+.complexity-level_choose {
+  display: flex;
+  flex-direction: column;
+  gap: 67px;
+  align-items: center;
+}
+
+.complexity-level_options {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  -moz-column-gap: 24px;
+       column-gap: 24px;
+}
+
+.complexity-level_option {
+  width: 98px;
+  height: 98px;
+  font-size: 6.4rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 7.2rem;
+  color: #0080C1;
+  background: #FFFFFF;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.complexity-level_option:hover {
+  background: #0080C1;
+  color: #FFFFFF;
+}
+
+.complexity-level_options > input {
+  visibility: hidden;
+  position: absolute;
+}
+
+input:checked + label {
+  background: #0080C1;
+  color: #FFFFFF;
+}/*# sourceMappingURL=style.css.map */
