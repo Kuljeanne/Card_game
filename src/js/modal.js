@@ -66,19 +66,20 @@ class Modal {
             event.preventDefault();
             if (this.modal.querySelector('form')) {
                 const formData = new FormData(this.modal.querySelector('form'))
-                chosenLevel = formData.get('complexity-level');
-                localStorage.setItem('level', chosenLevel);
-                this.isLevelChosen();
+                this.isLevelChosen(formData);
+                
+                
             }else{
                 localStorage.clear();
             };
         })
     }
 
-    isLevelChosen() {
-        if (!chosenLevel) {
+    isLevelChosen(data) {
+        if (data.get('complexity-level')== null) {
             this.modal.querySelector('.error').classList.remove('error__hidden')
         } else {
+            localStorage.setItem('level', data.get('complexity-level'));
             this.closeModal()
         }
     }
