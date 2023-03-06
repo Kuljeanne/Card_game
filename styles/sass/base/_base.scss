@@ -44,6 +44,9 @@ button:active {
 }
 
 .modal_wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background: $main-color;
@@ -54,6 +57,7 @@ button:active {
 }
 
 .modal_block {
+  
     opacity: 1;
     box-sizing: border-box;
     width: 480px;
