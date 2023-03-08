@@ -8,6 +8,7 @@
     flex-direction: column;
     gap: 67px;
     align-items: center;
+    position: relative;
 }
 
 .complexity-level_options {
@@ -46,4 +47,13 @@
 input:checked+label {
     background: #0080C1;
     color: #FFFFFF;
+}
+.error{
+    position: absolute;
+    top: -30px;
+    color: #ff0000;
+    @include font($size: 2rem, $height: 2.2rem)
+} 
+.error__hidden{
+    display: none;
 }
