@@ -16,15 +16,14 @@
     display: flex;
     flex-direction: row;
     column-gap: 24px;
-
 }
 
 .complexity-level_option {
     width: 98px;
     height: 98px;
     @include font($size: 6.4rem, $height: 7.2rem);
-    color: #0080C1;
-    background: #FFFFFF;
+    color: #0080c1;
+    background: #ffffff;
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -34,26 +33,26 @@
 }
 
 .complexity-level_option:hover {
-    background: #0080C1;
-    color: #FFFFFF;
+    background: #0080c1;
+    color: #ffffff;
     @extend %transition;
 }
 
-.complexity-level_options>input {
+.complexity-level_options > input {
     visibility: hidden;
     position: absolute;
 }
 
-input:checked+label {
-    background: #0080C1;
-    color: #FFFFFF;
+input:checked + label {
+    background: #0080c1;
+    color: #ffffff;
 }
-.error{
+.error {
     position: absolute;
     top: -30px;
     color: #ff0000;
-    @include font($size: 2rem, $height: 2.2rem)
-} 
-.error__hidden{
+    @include font($size: 2rem, $height: 2.2rem);
+}
+.error__hidden {
     display: none;
 }
