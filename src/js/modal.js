@@ -1,4 +1,4 @@
-class Modal {
+export class Modal {
     constructor(...classes) {
         this.classes = classes;
         this.modal = '';
@@ -54,7 +54,7 @@ class Modal {
     }
 
     openModal() {
-        app.append(this.wrapper)
+        document.querySelector('.app').append(this.wrapper)
     }
 
     findBtn() {

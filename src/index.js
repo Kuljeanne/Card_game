@@ -1,3 +1,5 @@
+import { Modal } from './js/modal'
+
 const app = document.querySelector('.app');
 
 let chosenLevel;
