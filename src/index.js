@@ -1,7 +1,11 @@
 import { Modal } from './js/modal'
 import { Timer } from './js/timer'
+import { Card } from './js/card'
 
 const app = document.querySelector('.app')
+
+const cardSuits = ['clubs', 'diamonds', 'hearts', 'spades']
+const cardValues = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6']
 
 // open choose-level-modal
 const chooseLevelModal = new Modal('complexity-level_block')
@@ -19,6 +23,8 @@ function isGameStarted() {
     } else {
         app.append(renderGameWrapper())
         const cards = document.querySelector('.game_field')
+        renderCards(cardSuits, cardValues, cards)
+
         if (localStorage.getItem('level') === '1') {
             console.log(cards)
         } else if (localStorage.getItem('level') === '2') {
@@ -60,3 +66,13 @@ function startAgain() {
     window.location.reload()
 }
 
+function renderCards(suits, values, container) {
+    for (let i = 0; i < suits.length; i++) {
+        for (let j = 0; j < values.length; j++) {
+            const card = new Card()
+
+            card.build(suits[i], values[j])
+            card.render(container)
+        }
+    }
+}

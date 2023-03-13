@@ -21,13 +21,20 @@ html {
   padding: 0;
 }
 
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-color: #004980;
+}
+
 .app {
   padding: 22px;
   box-sizing: border-box;
-  background-color: #004980;
   font-feature-settings: "pnum" on, "lnum" on;
-  width: 100vw;
-  height: 100vh;
+  max-width: 1100px;
 }
 
 h2 {
@@ -194,9 +201,51 @@ input:checked + label {
 }
 
 .game_field {
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-content: space-between;
+  gap: 15px;
+}
+
+.card {
+  height: 133px;
+  width: 9%;
+  padding: 6px;
+  box-sizing: border-box;
+  color: #000;
+  background: #fff;
+  border-radius: 4px;
+  font-size: 2.4rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 3.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card_top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-start;
+}
+
+.suit-mini {
+  width: 7px;
+}
+
+.card_center {
+  align-self: center;
+  width: 25px;
+}
+
+.card_bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-end;
+  transform: rotate(180deg);
 }/*# sourceMappingURL=style.css.map */
