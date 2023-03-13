@@ -1,0 +1,45 @@
+.card {
+    height: 133px;
+    width: 9%;
+    padding: 6px;
+    box-sizing: border-box;
+    color: $text;
+    background: #fff;
+    border-radius: 4px;
+    @include font($size: 2.4rem, $height: 3.2rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card_top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: flex-start;
+}
+
+.suit-mini {
+    width: 7px;
+}
+
+.card_center {
+    align-self: center;
+    width: 25px;
+}
+
+.card_bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: flex-end;
+    transform: rotate(180deg);
+}
+
+.card-back {
+    height: 100%;
+    background-color: $back-card;
+    background-image: url('../../../src/img/mask.png');
+    background-size: cover;
+    border-radius: 4px;
+}

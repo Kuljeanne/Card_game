@@ -3,7 +3,6 @@
 @import 'sass/abstract/mixin';
 @import 'sass/abstract/placeholders';
 
-
 // base
 @import 'sass/base/constants';
 @import 'sass/base/base';
@@ -11,4 +10,5 @@
 // components
 
 @import 'sass/components/choose-complex';
-
+@import 'sass/components/game-field';
+@import 'sass/components/cards';
