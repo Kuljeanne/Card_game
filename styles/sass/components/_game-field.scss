@@ -1,0 +1,41 @@
+.tools_wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.timer_wrapper {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+}
+
+.time_desc {
+    display: flex;
+    flex-direction: row;
+    @include font($size: 1.6rem, $height: 1.6rem);
+    font-feature-settings: 'pnum' on, 'lnum' on;
+    padding-right: 5px;
+}
+
+.desc {
+    width: 50%;
+    text-align: right;
+}
+
+.min {
+    padding-right: 10px;
+}
+
+.timer {
+    @include font($size: 6.4rem, $height: 6.4rem);
+}
+
+.game_field {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
+}

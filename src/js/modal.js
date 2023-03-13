@@ -36,8 +36,6 @@ export class Modal {
 
         this.appendsModalElements()
 
-        this.openModal()
-
         this.modalBtn = this.findBtn()
 
         this.bindEvents()
