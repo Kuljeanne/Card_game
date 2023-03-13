@@ -23,14 +23,18 @@ function isGameStarted() {
     } else {
         app.append(renderGameWrapper())
         const cards = document.querySelector('.game_field')
-        renderCards(cardSuits, cardValues, cards)
 
         if (localStorage.getItem('level') === '1') {
-            console.log(cards)
+            renderCards(cardSuits, cardValues, cards)
+
+            console.log('easy')
         } else if (localStorage.getItem('level') === '2') {
-            console.log(cards)
+            renderCards(cardSuits, cardValues, cards)
+            hideCards()
+            console.log('middle')
         } else if (localStorage.getItem('level') === '3') {
-            console.log(cards)
+            renderCards(cardSuits, cardValues, cards)
+            console.log('hard')
         }
     }
 }
@@ -75,4 +79,14 @@ function renderCards(suits, values, container) {
             card.render(container)
         }
     }
+}
+function hideCards(){
+    document.querySelectorAll('.card').forEach(card=>{
+        card.textContent = ''
+        card.append(createBackCard())
+    })
+}
+
+function createBackCard(){
+    return createElem('back', 'div', 'card-back')
 }

@@ -248,4 +248,12 @@ input:checked + label {
   align-items: center;
   align-self: flex-end;
   transform: rotate(180deg);
+}
+
+.card-back {
+  height: 100%;
+  background-color: #e4fbff;
+  background-image: url("../../../src/img/mask.png");
+  background-size: cover;
+  border-radius: 4px;
 }/*# sourceMappingURL=style.css.map */

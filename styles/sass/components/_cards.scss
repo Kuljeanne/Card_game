@@ -35,3 +35,11 @@
     align-self: flex-end;
     transform: rotate(180deg);
 }
+
+.card-back {
+    height: 100%;
+    background-color: $back-card;
+    background-image: url('../../../src/img/mask.png');
+    background-size: cover;
+    border-radius: 4px;
+}
