@@ -1,24 +1,6 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
-
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _js_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/modal */ \"./src/js/modal.js\");\n/* harmony import */ var _js_timer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/timer */ \"./src/js/timer.js\");\n/* harmony import */ var _js_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/card */ \"./src/js/card.js\");\n\n\n\n\nconst app = document.querySelector('.app')\n\nconst cardSuits = ['clubs', 'diamonds', 'hearts', 'spades']\nconst cardValues = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6']\n\n// open choose-level-modal\nconst chooseLevelModal = new _js_modal__WEBPACK_IMPORTED_MODULE_0__.Modal('complexity-level_block')\nchooseLevelModal.buildModal('Выбери сложность')\n\nif (!localStorage.getItem('level')) {\n    chooseLevelModal.openModal()\n}\n\nisGameStarted()\n\nfunction isGameStarted() {\n    if (!localStorage.getItem('level')) {\n        setTimeout(isGameStarted, 500)\n    } else {\n        app.append(renderGameWrapper())\n        const cards = document.querySelector('.game_field')\n\n        if (localStorage.getItem('level') === '1') {\n            renderCards(cardSuits, cardValues, cards)\n\n            console.log('easy')\n        } else if (localStorage.getItem('level') === '2') {\n            renderCards(cardSuits, cardValues, cards)\n            hideCards()\n            console.log('middle')\n        } else if (localStorage.getItem('level') === '3') {\n            renderCards(cardSuits, cardValues, cards)\n            console.log('hard')\n        }\n    }\n}\n\nfunction renderGameWrapper() {\n    const gameWrapper = createElem('gameWrapper', 'div', 'game_wrapper')\n    const toolsWrapper = createElem('toolsWrapper', 'div', 'tools_wrapper')\n    const timer = new _js_timer__WEBPACK_IMPORTED_MODULE_1__.Timer()\n    timer.buildTimer()\n    const buttonStartAgain = createElem(\n        'buttonStartAgain',\n        'button',\n        'startAgain_btn'\n    )\n    buttonStartAgain.textContent = 'Начать заново'\n    buttonStartAgain.addEventListener('click', startAgain)\n    const gameField = createElem('gameField', 'div', 'game_field')\n    gameWrapper.append(toolsWrapper)\n    timer.renderTimer(toolsWrapper)\n    toolsWrapper.append(buttonStartAgain)\n    gameWrapper.append(gameField)\n\n    return gameWrapper\n}\n\nfunction createElem(node, elemHTML, classes) {\n    node = document.createElement(elemHTML)\n    node.classList.add(classes)\n    return node\n}\nfunction startAgain() {\n    localStorage.clear()\n    window.location.reload()\n}\n\nfunction renderCards(suits, values, container) {\n    for (let i = 0; i < suits.length; i++) {\n        for (let j = 0; j < values.length; j++) {\n            const card = new _js_card__WEBPACK_IMPORTED_MODULE_2__.Card()\n\n            card.build(suits[i], values[j])\n            card.render(container)\n        }\n    }\n}\nfunction hideCards(){\n    document.querySelectorAll('.card').forEach(card=>{\n        card.textContent = ''\n        card.append(createBackCard())\n    })\n}\n\nfunction createBackCard(){\n    return createElem('back', 'div', 'card-back')\n}\n\n\n//# sourceURL=webpack://course4/./src/index.js?");
-
-/***/ }),
 
 /***/ "./src/js/card.js":
 /*!************************!*\
@@ -26,7 +8,44 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _js_
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Card\": () => (/* binding */ Card)\n/* harmony export */ });\nclass Card {\r\n    constructor() {\r\n        this.card = ''\r\n        this.top = ''\r\n        this.center = ''\r\n        this.bottom = ''\r\n    }\r\n\r\n    build(suit, value) {\r\n        this.card = this.createDomNode(this.card, 'div', 'card')\r\n        this.top = this.createDomNode(this.top, 'div', 'card_top')\r\n        this.top.innerHTML = `<span>${value}</span><img class=\"suit-mini\" src= \"../src/img/${suit}.svg\" alt=\"${suit}\">`\r\n        this.center = this.createDomNode(this.top, 'img', 'card_center')\r\n        this.center.src = `../src/img/${suit}.svg`\r\n        this.center.alt = `${suit}:${value}`\r\n        this.bottom = this.createDomNode(this.top, 'div', 'card_bottom')\r\n        this.bottom.innerHTML = `<span>${value}</span><img class=\"suit-mini\" src= \"../src/img/${suit}.svg\" alt=\"${suit}\">`\r\n\r\n        this.appendElements()\r\n    }\r\n\r\n    createDomNode(node, elemHTML, classes) {\r\n        node = document.createElement(elemHTML)\r\n        node.classList.add(classes)\r\n        return node\r\n    }\r\n    appendElements() {\r\n        this.card.append(this.top)\r\n        this.card.append(this.center)\r\n        this.card.append(this.bottom)\r\n    }\r\n\r\n    render(container){\r\n        container.append(this.card)\r\n    }\r\n}\r\n\n\n//# sourceURL=webpack://course4/./src/js/card.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Card": () => (/* binding */ Card)
+/* harmony export */ });
+class Card {
+  constructor() {
+    this.card = '';
+    this.cardWrapper = '';
+    this.top = '';
+    this.center = '';
+    this.bottom = '';
+  }
+  build(suit, value) {
+    this.card = `${suit}:${value}`;
+    this.cardWrapper = this.createDomNode(this.cardWrapper, 'div', 'card');
+    this.top = this.createDomNode(this.top, 'div', 'card_top');
+    this.top.innerHTML = `<span>${value}</span><img class="suit-mini" src= "img/${suit}.svg" alt="${suit}">`;
+    this.center = this.createDomNode(this.top, 'img', 'card_center');
+    this.center.src = `img/${suit}.svg`;
+    this.center.alt = `${suit}:${value}`;
+    this.bottom = this.createDomNode(this.top, 'div', 'card_bottom');
+    this.bottom.innerHTML = `<span>${value}</span><img class="suit-mini" src= "img/${suit}.svg" alt="${suit}">`;
+    this.appendElements();
+  }
+  createDomNode(node, elemHTML, classes) {
+    node = document.createElement(elemHTML);
+    node.classList.add(classes);
+    return node;
+  }
+  appendElements() {
+    this.cardWrapper.append(this.top);
+    this.cardWrapper.append(this.center);
+    this.cardWrapper.append(this.bottom);
+  }
+  render(container) {
+    container.append(this.cardWrapper);
+  }
+}
 
 /***/ }),
 
@@ -36,7 +55,83 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Modal\": () => (/* binding */ Modal)\n/* harmony export */ });\nclass Modal {\n    constructor(...classes) {\n        this.classes = classes\n        this.modal = ''\n        this.modalTitle = ''\n        this.modalContent = ''\n        this.modalBtn = ''\n        this.wrapper = ''\n    }\n\n    buildModal(title) {\n        this.wrapper = this.createDomNode(this.wrapper, 'div', 'modal_wrapper')\n\n        this.modal = this.createDomNode(this.modal, 'div', this.classes)\n        this.modal.classList.add('modal_block')\n\n        this.modalTitle = this.createDomNode(this.modalTitle, 'h2')\n        this.modalTitle.textContent = title\n\n        if (this.modal.classList.contains('complexity-level_block')) {\n            this.modalTitle.classList.add('complexity-level_title')\n            this.modalContent = this.createDomNode(\n                this.modalContent,\n                'form',\n                'complexity-level_choose'\n            )\n            this.modalContent.innerHTML = `<div class = \"error error__hidden\">Необходимо выбрать сложность</div><div class=\"complexity-level_options\">\n            <input type=\"radio\" name=\"complexity-level\" value=\"1\" id=\"complexity-level_easy\">\n            <label class=\"complexity-level_option\" for=\"complexity-level_easy\">1</label>\n            <input type=\"radio\" name=\"complexity-level\" value=\"2\" id=\"complexity-level_medium\">\n            <label class=\"complexity-level_option\" for=\"complexity-level_medium\">2</label>\n            <input type=\"radio\" name=\"complexity-level\" value=\"3\" id=\"complexity-level_hard\">\n            <label class=\"complexity-level_option\" for=\"complexity-level_hard\">3</label>\n            </div><button class=\"complexity-level_btn\">Старт</button>`\n        }\n\n        this.appendsModalElements()\n\n        this.modalBtn = this.findBtn()\n\n        this.bindEvents()\n    }\n\n    createDomNode(node, elemHTML, classes) {\n        node = document.createElement(elemHTML)\n        if (classes) node.classList.add(classes)\n        return node\n    }\n\n    appendsModalElements() {\n        this.wrapper.append(this.modal)\n        this.modal.append(this.modalTitle)\n        this.modal.append(this.modalContent)\n    }\n\n    openModal() {\n        document.querySelector('.app').append(this.wrapper)\n    }\n\n    findBtn() {\n        return this.modal.querySelector('button')\n    }\n\n    bindEvents() {\n        this.modalBtn.addEventListener('click', (event) => {\n            event.preventDefault()\n            if (this.modal.querySelector('form')) {\n                const formData = new FormData(this.modal.querySelector('form'))\n                this.isLevelChosen(formData)\n            } else {\n                localStorage.clear()\n            }\n        })\n    }\n\n    isLevelChosen(data) {\n        if (data.get('complexity-level') === null) {\n            this.modal.querySelector('.error').classList.remove('error__hidden')\n        } else {\n            localStorage.setItem('level', data.get('complexity-level'))\n            this.closeModal()\n        }\n    }\n\n    closeModal() {\n        this.wrapper.remove()\n    }\n}\n\n\n//# sourceURL=webpack://course4/./src/js/modal.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Modal": () => (/* binding */ Modal)
+/* harmony export */ });
+class Modal {
+  constructor() {
+    for (var _len = arguments.length, classes = new Array(_len), _key = 0; _key < _len; _key++) {
+      classes[_key] = arguments[_key];
+    }
+    this.classes = classes;
+    this.modal = '';
+    this.modalTitle = '';
+    this.modalContent = '';
+    this.modalBtn = '';
+    this.wrapper = '';
+  }
+  buildModal(title) {
+    this.wrapper = this.createDomNode(this.wrapper, 'div', 'modal_wrapper');
+    this.modal = this.createDomNode(this.modal, 'div', this.classes);
+    this.modal.classList.add('modal_block');
+    this.modalTitle = this.createDomNode(this.modalTitle, 'h2');
+    this.modalTitle.textContent = title;
+    if (this.modal.classList.contains('complexity-level_block')) {
+      this.modalTitle.classList.add('complexity-level_title');
+      this.modalContent = this.createDomNode(this.modalContent, 'form', 'complexity-level_choose');
+      this.modalContent.innerHTML = `<div class = "error error__hidden">Необходимо выбрать сложность</div><div class="complexity-level_options">
+            <input type="radio" name="complexity-level" value="1" id="complexity-level_easy">
+            <label class="complexity-level_option" for="complexity-level_easy">1</label>
+            <input type="radio" name="complexity-level" value="2" id="complexity-level_medium">
+            <label class="complexity-level_option" for="complexity-level_medium">2</label>
+            <input type="radio" name="complexity-level" value="3" id="complexity-level_hard">
+            <label class="complexity-level_option" for="complexity-level_hard">3</label>
+            </div><button class="complexity-level_btn">Старт</button>`;
+    }
+    this.appendsModalElements();
+    this.modalBtn = this.findBtn();
+    this.bindEvents();
+  }
+  createDomNode(node, elemHTML, classes) {
+    node = document.createElement(elemHTML);
+    if (classes) node.classList.add(classes);
+    return node;
+  }
+  appendsModalElements() {
+    this.wrapper.append(this.modal);
+    this.modal.append(this.modalTitle);
+    this.modal.append(this.modalContent);
+  }
+  openModal() {
+    document.querySelector('.app').append(this.wrapper);
+  }
+  findBtn() {
+    return this.modal.querySelector('button');
+  }
+  bindEvents() {
+    this.modalBtn.addEventListener('click', event => {
+      event.preventDefault();
+      if (this.modal.querySelector('form')) {
+        const formData = new FormData(this.modal.querySelector('form'));
+        this.isLevelChosen(formData);
+      } else {
+        localStorage.clear();
+      }
+    });
+  }
+  isLevelChosen(data) {
+    if (data.get('complexity-level') === null) {
+      this.modal.querySelector('.error').classList.remove('error__hidden');
+    } else {
+      localStorage.setItem('level', data.get('complexity-level'));
+      this.closeModal();
+    }
+  }
+  closeModal() {
+    this.wrapper.remove();
+  }
+}
 
 /***/ }),
 
@@ -46,7 +141,37 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Timer\": () => (/* binding */ Timer)\n/* harmony export */ });\nclass Timer {\r\n    constructor() {\r\n        this.wrapper = ''\r\n        this.desc = ''\r\n        this.time = ''\r\n    }\r\n\r\n    buildTimer() {\r\n        this.wrapper = this.createDomNode(this.wrapper, 'div', 'timer_wrapper')\r\n\r\n        this.desc = this.createDomNode(this.wrapper, 'div', 'time_desc')\r\n        this.desc.innerHTML = `<div class=\"desc min\">min</div><div class=\"desc\">sec</div>`\r\n\r\n        this.time = this.createDomNode(this.wrapper, 'div', 'timer')\r\n        this.time.textContent = '00.00'\r\n\r\n        this.appendElements()\r\n    }\r\n    createDomNode(node, elemHTML, classes) {\r\n        node = document.createElement(elemHTML)\r\n        node.classList.add(classes)\r\n        return node\r\n    }\r\n\r\n    appendElements() {\r\n        this.wrapper.append(this.desc)\r\n        this.wrapper.append(this.time)\r\n    }\r\n\r\n    renderTimer(container) {\r\n        container.append(this.wrapper)\r\n    }\r\n}\r\n\n\n//# sourceURL=webpack://course4/./src/js/timer.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Timer": () => (/* binding */ Timer)
+/* harmony export */ });
+class Timer {
+  constructor() {
+    this.wrapper = '';
+    this.desc = '';
+    this.time = '';
+  }
+  buildTimer() {
+    this.wrapper = this.createDomNode(this.wrapper, 'div', 'timer_wrapper');
+    this.desc = this.createDomNode(this.wrapper, 'div', 'time_desc');
+    this.desc.innerHTML = `<div class="desc min">min</div><div class="desc">sec</div>`;
+    this.time = this.createDomNode(this.wrapper, 'div', 'timer');
+    this.time.textContent = '00.00';
+    this.appendElements();
+  }
+  createDomNode(node, elemHTML, classes) {
+    node = document.createElement(elemHTML);
+    node.classList.add(classes);
+    return node;
+  }
+  appendElements() {
+    this.wrapper.append(this.desc);
+    this.wrapper.append(this.time);
+  }
+  renderTimer(container) {
+    container.append(this.wrapper);
+  }
+}
 
 /***/ })
 
@@ -106,11 +231,116 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.js");
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+var __webpack_exports__ = {};
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _js_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/modal */ "./src/js/modal.js");
+/* harmony import */ var _js_timer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/timer */ "./src/js/timer.js");
+/* harmony import */ var _js_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/card */ "./src/js/card.js");
+//import '../styles/style.scss'
+
+
+
+const app = document.querySelector('.app');
+
+// open choose-level-modal
+const chooseLevelModal = new _js_modal__WEBPACK_IMPORTED_MODULE_0__.Modal('complexity-level_block');
+chooseLevelModal.buildModal('Выбери сложность');
+if (!localStorage.getItem('level')) {
+  chooseLevelModal.openModal();
+}
+const cardSuits = ['clubs', 'diamonds', 'hearts', 'spades'];
+const cardValues = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6'];
+const allCards = [];
+buildCards(cardSuits, cardValues, allCards);
+const mixedCards = shuffle(allCards);
+isGameStarted();
+function isGameStarted() {
+  if (!localStorage.getItem('level')) {
+    setTimeout(isGameStarted, 500);
+  } else {
+    app.append(renderGameWrapper());
+    const cards = document.querySelector('.game_field');
+    if (localStorage.getItem('level') === '1') {
+      mixedCards.length = 6;
+      console.log('easy');
+    } else if (localStorage.getItem('level') === '2') {
+      mixedCards.length = 12;
+      console.log('middle');
+    } else if (localStorage.getItem('level') === '3') {
+      mixedCards.length = 18;
+      console.log('hard');
+    }
+  }
+}
+
+//  hideCards() скрывает карты на поле
+function renderGameWrapper() {
+  const gameWrapper = createElem('gameWrapper', 'div', 'game_wrapper');
+  const toolsWrapper = createElem('toolsWrapper', 'div', 'tools_wrapper');
+  const timer = new _js_timer__WEBPACK_IMPORTED_MODULE_1__.Timer();
+  timer.buildTimer();
+  const buttonStartAgain = createElem('buttonStartAgain', 'button', 'startAgain_btn');
+  buttonStartAgain.textContent = 'Начать заново';
+  buttonStartAgain.addEventListener('click', startAgain);
+  const gameField = createElem('gameField', 'div', 'game_field');
+  gameWrapper.append(toolsWrapper);
+  timer.renderTimer(toolsWrapper);
+  toolsWrapper.append(buttonStartAgain);
+  gameWrapper.append(gameField);
+  return gameWrapper;
+}
+function createElem(node, elemHTML, classes) {
+  node = document.createElement(elemHTML);
+  node.classList.add(classes);
+  return node;
+}
+function startAgain() {
+  localStorage.clear();
+  window.location.reload();
+}
+function buildCards(suits, values, array) {
+  for (let i = 0; i < suits.length; i++) {
+    for (let j = 0; j < values.length; j++) {
+      const card = new _js_card__WEBPACK_IMPORTED_MODULE_2__.Card();
+      card.build(suits[i], values[j]);
+      array.push(card);
+    }
+  }
+}
+function hideCards() {
+  document.querySelectorAll('.card').forEach(card => {
+    card.textContent = '';
+    card.append(createBackCard());
+  });
+}
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+function createBackCard() {
+  return createElem('back', 'div', 'card-back');
+}
+})();
+
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+/*!***************************!*\
+  !*** ./styles/style.scss ***!
+  \***************************/
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+})();
+
 /******/ })()
 ;
+//# sourceMappingURL=main.js.map
