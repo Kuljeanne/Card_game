@@ -17,7 +17,7 @@ const cardSuits = ['clubs', 'diamonds', 'hearts', 'spades']
 const cardValues = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6']
 const allCards = []
 buildCards(cardSuits, cardValues, allCards)
-const mixedCards = shuffle(allCards)
+let mixedCards = shuffle(allCards)
 
 isGameStarted()
 
@@ -26,21 +26,16 @@ function isGameStarted() {
         setTimeout(isGameStarted, 500)
     } else {
         app.append(renderGameWrapper())
-        // const cards = document.querySelector('.game_field')
+        const cards = document.querySelector('.game_field')
         if (localStorage.getItem('level') === '1') {
-
-            mixedCards.length = 6
-
-            console.log('easy')
+            mixedCards = shuffle(makeArrayOfPairs(mixedCards, 3))
         } else if (localStorage.getItem('level') === '2') {
-
-            mixedCards.length = 12
-            console.log('middle')
+            mixedCards = shuffle(makeArrayOfPairs(mixedCards, 6))
         } else if (localStorage.getItem('level') === '3') {
-            mixedCards.length = 18
-
-             console.log('hard')
+            mixedCards = shuffle(makeArrayOfPairs(mixedCards, 9))
         }
+        mixedCards.forEach((card) => card.render(cards))
+
     }
 }
 
@@ -85,6 +80,18 @@ function buildCards(suits, values, array) {
         }
     }
 }
+function makeArrayOfPairs(array, length) {
+    array.length = length
+    let cloneArray = []
+    array.forEach((item) => {
+        let clone = new Card()
+        clone.build(item.suit, item.value)
+        cloneArray.push(clone)
+    })
+
+    return [array, cloneArray].flat()
+}
+
 // function hideCards() {
 //     document.querySelectorAll('.card').forEach((card) => {
 //         card.textContent = ''

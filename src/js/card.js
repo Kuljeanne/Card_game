@@ -8,6 +8,8 @@ export class Card {
     }
 
     build(suit, value) {
+        this.suit = suit
+        this.value = value
         this.card = `${suit}:${value}`
         this.cardWrapper = this.createDomNode(this.cardWrapper, 'div', 'card')
         this.top = this.createDomNode(this.top, 'div', 'card_top')

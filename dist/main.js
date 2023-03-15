@@ -21,6 +21,8 @@ class Card {
     this.bottom = '';
   }
   build(suit, value) {
+    this.suit = suit;
+    this.value = value;
     this.card = `${suit}:${value}`;
     this.cardWrapper = this.createDomNode(this.cardWrapper, 'div', 'card');
     this.top = this.createDomNode(this.top, 'div', 'card_top');
@@ -156,7 +158,7 @@ class Timer {
     this.desc = this.createDomNode(this.wrapper, 'div', 'time_desc');
     this.desc.innerHTML = `<div class="desc min">min</div><div class="desc">sec</div>`;
     this.time = this.createDomNode(this.wrapper, 'div', 'timer');
-    this.time.textContent = '00.00';
+    this.time.textContent = '00.05';
     this.appendElements();
   }
   createDomNode(node, elemHTML, classes) {
@@ -258,7 +260,7 @@ const cardSuits = ['clubs', 'diamonds', 'hearts', 'spades'];
 const cardValues = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6'];
 const allCards = [];
 buildCards(cardSuits, cardValues, allCards);
-const mixedCards = shuffle(allCards);
+let mixedCards = shuffle(allCards);
 isGameStarted();
 function isGameStarted() {
   if (!localStorage.getItem('level')) {
@@ -267,15 +269,13 @@ function isGameStarted() {
     app.append(renderGameWrapper());
     const cards = document.querySelector('.game_field');
     if (localStorage.getItem('level') === '1') {
-      mixedCards.length = 6;
-      console.log('easy');
+      mixedCards = shuffle(makeArrayOfPairs(mixedCards, 3));
     } else if (localStorage.getItem('level') === '2') {
-      mixedCards.length = 12;
-      console.log('middle');
+      mixedCards = shuffle(makeArrayOfPairs(mixedCards, 6));
     } else if (localStorage.getItem('level') === '3') {
-      mixedCards.length = 18;
-      console.log('hard');
+      mixedCards = shuffle(makeArrayOfPairs(mixedCards, 9));
     }
+    mixedCards.forEach(card => card.render(cards));
   }
 }
 
@@ -313,12 +313,24 @@ function buildCards(suits, values, array) {
     }
   }
 }
-function hideCards() {
-  document.querySelectorAll('.card').forEach(card => {
-    card.textContent = '';
-    card.append(createBackCard());
+function makeArrayOfPairs(array, length) {
+  array.length = length;
+  let cloneArray = [];
+  array.forEach(item => {
+    let clone = new _js_card__WEBPACK_IMPORTED_MODULE_2__.Card();
+    clone.build(item.suit, item.value);
+    cloneArray.push(clone);
   });
+  return [array, cloneArray].flat();
 }
+
+// function hideCards() {
+//     document.querySelectorAll('.card').forEach((card) => {
+//         card.textContent = ''
+//         card.append(createBackCard())
+//     })
+// }
+
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -326,9 +338,10 @@ function shuffle(array) {
   }
   return array;
 }
-function createBackCard() {
-  return createElem('back', 'div', 'card-back');
-}
+
+// function createBackCard() {
+//     return createElem('back', 'div', 'card-back')
+// }
 })();
 
 // This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
