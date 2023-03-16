@@ -3,6 +3,8 @@ export class Timer {
         this.wrapper = ''
         this.desc = ''
         this.time = ''
+        this.min = 0
+        this.sec = 0
     }
 
     buildTimer() {
@@ -16,6 +18,7 @@ export class Timer {
 
         this.appendElements()
     }
+
     createDomNode(node, elemHTML, classes) {
         node = document.createElement(elemHTML)
         node.classList.add(classes)

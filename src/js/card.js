@@ -19,7 +19,7 @@ export class Card {
         this.center.alt = `${suit}:${value}`
         this.bottom = this.createDomNode(this.top, 'div', 'card_bottom')
         this.bottom.innerHTML = `<span>${value}</span><img class="suit-mini" src= "img/${suit}.svg" alt="${suit}">`
-
+        this.onclick()
         this.appendElements()
     }
 
@@ -36,5 +36,36 @@ export class Card {
 
     render(container) {
         container.append(this.cardWrapper)
+    }
+
+    onclick() {
+        this.cardWrapper.addEventListener('click', () => {
+            if (this.cardWrapper.classList.contains('hidden')) {
+                this.cardWrapper.querySelector('.card-back').remove()
+                if (!localStorage.getItem('chosen-card')) {
+                    localStorage.setItem('chosen-card', this.card)
+                    this.cardWrapper.classList.remove('hidden')
+                } else {
+                    if (localStorage.getItem('chosen-card') !== this.card) {
+                        document
+                            .querySelectorAll('.card-back')
+                            .forEach((elem) => elem.remove())
+                        setTimeout(() => {
+                            alert('Вы проиграли')
+                        }, 500)
+                    } else {
+                        localStorage.removeItem('chosen-card')
+                        this.cardWrapper.classList.remove('hidden')
+                        let hiddenCardsLeft =
+                            document.querySelectorAll('.hidden').length
+                        if (hiddenCardsLeft === 0) {
+                            setTimeout(() => {
+                                alert('Вы выиграли')
+                            }, 500)
+                        }
+                    }
+                }
+            }
+        })
     }
 }

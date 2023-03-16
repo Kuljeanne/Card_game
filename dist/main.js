@@ -32,6 +32,7 @@ class Card {
     this.center.alt = `${suit}:${value}`;
     this.bottom = this.createDomNode(this.top, 'div', 'card_bottom');
     this.bottom.innerHTML = `<span>${value}</span><img class="suit-mini" src= "img/${suit}.svg" alt="${suit}">`;
+    this.onclick();
     this.appendElements();
   }
   createDomNode(node, elemHTML, classes) {
@@ -46,6 +47,33 @@ class Card {
   }
   render(container) {
     container.append(this.cardWrapper);
+  }
+  onclick() {
+    this.cardWrapper.addEventListener('click', () => {
+      if (this.cardWrapper.classList.contains('hidden')) {
+        this.cardWrapper.querySelector('.card-back').remove();
+        if (!localStorage.getItem('chosen-card')) {
+          localStorage.setItem('chosen-card', this.card);
+          this.cardWrapper.classList.remove('hidden');
+        } else {
+          if (localStorage.getItem('chosen-card') !== this.card) {
+            document.querySelectorAll('.card-back').forEach(elem => elem.remove());
+            setTimeout(() => {
+              alert('Вы проиграли');
+            }, 500);
+          } else {
+            localStorage.removeItem('chosen-card');
+            this.cardWrapper.classList.remove('hidden');
+            let hiddenCardsLeft = document.querySelectorAll('.hidden').length;
+            if (hiddenCardsLeft === 0) {
+              setTimeout(() => {
+                alert('Вы выиграли');
+              }, 500);
+            }
+          }
+        }
+      }
+    });
   }
 }
 
@@ -152,6 +180,8 @@ class Timer {
     this.wrapper = '';
     this.desc = '';
     this.time = '';
+    this.min = 0;
+    this.sec = 0;
   }
   buildTimer() {
     this.wrapper = this.createDomNode(this.wrapper, 'div', 'timer_wrapper');
@@ -276,10 +306,9 @@ function isGameStarted() {
       mixedCards = shuffle(makeArrayOfPairs(mixedCards, 9));
     }
     mixedCards.forEach(card => card.render(cards));
+    setTimeout(hideCards, 5000);
   }
 }
-
-//  hideCards() скрывает карты на поле
 function renderGameWrapper() {
   const gameWrapper = createElem('gameWrapper', 'div', 'game_wrapper');
   const toolsWrapper = createElem('toolsWrapper', 'div', 'tools_wrapper');
@@ -323,14 +352,6 @@ function makeArrayOfPairs(array, length) {
   });
   return [array, cloneArray].flat();
 }
-
-// function hideCards() {
-//     document.querySelectorAll('.card').forEach((card) => {
-//         card.textContent = ''
-//         card.append(createBackCard())
-//     })
-// }
-
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -338,10 +359,15 @@ function shuffle(array) {
   }
   return array;
 }
-
-// function createBackCard() {
-//     return createElem('back', 'div', 'card-back')
-// }
+function hideCards() {
+  document.querySelectorAll('.card').forEach(card => {
+    card.classList.add('hidden');
+    card.append(createBackCard());
+  });
+}
+function createBackCard() {
+  return createElem('back', 'div', 'card-back');
+}
 })();
 
 // This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.

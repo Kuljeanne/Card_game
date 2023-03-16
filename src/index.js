@@ -35,11 +35,10 @@ function isGameStarted() {
             mixedCards = shuffle(makeArrayOfPairs(mixedCards, 9))
         }
         mixedCards.forEach((card) => card.render(cards))
-
+        setTimeout(hideCards, 5000);
     }
 }
 
-//  hideCards() скрывает карты на поле
 function renderGameWrapper() {
     const gameWrapper = createElem('gameWrapper', 'div', 'game_wrapper')
     const toolsWrapper = createElem('toolsWrapper', 'div', 'tools_wrapper')
@@ -92,13 +91,6 @@ function makeArrayOfPairs(array, length) {
     return [array, cloneArray].flat()
 }
 
-// function hideCards() {
-//     document.querySelectorAll('.card').forEach((card) => {
-//         card.textContent = ''
-//         card.append(createBackCard())
-//     })
-// }
-
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1))
@@ -107,6 +99,13 @@ function shuffle(array) {
     return array
 }
 
-// function createBackCard() {
-//     return createElem('back', 'div', 'card-back')
-// }
+function hideCards() {
+    document.querySelectorAll('.card').forEach((card) => {
+        card.classList.add('hidden')
+        card.append(createBackCard())
+    })
+}
+
+function createBackCard() {
+    return createElem('back', 'div', 'card-back')
+}
