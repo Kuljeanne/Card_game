@@ -58,17 +58,19 @@ class Card {
         } else {
           if (localStorage.getItem('chosen-card') !== this.card) {
             document.querySelectorAll('.card-back').forEach(elem => elem.remove());
+            localStorage.setItem('time', document.querySelector('.timer').textContent);
             setTimeout(() => {
               alert('Вы проиграли');
-            }, 500);
+            }, 200);
           } else {
             localStorage.removeItem('chosen-card');
             this.cardWrapper.classList.remove('hidden');
             let hiddenCardsLeft = document.querySelectorAll('.hidden').length;
             if (hiddenCardsLeft === 0) {
+              localStorage.setItem('time', document.querySelector('.timer').textContent);
               setTimeout(() => {
                 alert('Вы выиграли');
-              }, 500);
+              }, 200);
             }
           }
         }
@@ -185,10 +187,10 @@ class Timer {
   }
   buildTimer() {
     this.wrapper = this.createDomNode(this.wrapper, 'div', 'timer_wrapper');
-    this.desc = this.createDomNode(this.wrapper, 'div', 'time_desc');
+    this.desc = this.createDomNode(this.desc, 'div', 'time_desc');
     this.desc.innerHTML = `<div class="desc min">min</div><div class="desc">sec</div>`;
-    this.time = this.createDomNode(this.wrapper, 'div', 'timer');
-    this.time.textContent = '00.05';
+    this.time = this.createDomNode(this.time, 'div', 'timer');
+    this.time.textContent = '00.00';
     this.appendElements();
   }
   createDomNode(node, elemHTML, classes) {
@@ -202,6 +204,22 @@ class Timer {
   }
   renderTimer(container) {
     container.append(this.wrapper);
+  }
+  tick() {
+    this.sec++;
+    if (this.sec >= 60) {
+      this.sec = 0;
+      this.min++;
+    }
+    this.time.textContent = (this.min > 9 ? this.min : '0' + this.min) + ':' + (this.sec > 9 ? this.sec : '0' + this.sec);
+    this.timer();
+  }
+  timer() {
+    this.t = setTimeout(this.tick.bind(this), 1000);
+    return this.t;
+  }
+  stop() {
+    clearTimeout(this.t);
   }
 }
 
@@ -286,6 +304,7 @@ chooseLevelModal.buildModal('Выбери сложность');
 if (!localStorage.getItem('level')) {
   chooseLevelModal.openModal();
 }
+const timer = new _js_timer__WEBPACK_IMPORTED_MODULE_1__.Timer();
 const cardSuits = ['clubs', 'diamonds', 'hearts', 'spades'];
 const cardValues = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6'];
 const allCards = [];
@@ -306,13 +325,15 @@ function isGameStarted() {
       mixedCards = shuffle(makeArrayOfPairs(mixedCards, 9));
     }
     mixedCards.forEach(card => card.render(cards));
-    setTimeout(hideCards, 5000);
+    setTimeout(() => {
+      hideCards();
+      timer.tick();
+    }, 5000);
   }
 }
 function renderGameWrapper() {
   const gameWrapper = createElem('gameWrapper', 'div', 'game_wrapper');
   const toolsWrapper = createElem('toolsWrapper', 'div', 'tools_wrapper');
-  const timer = new _js_timer__WEBPACK_IMPORTED_MODULE_1__.Timer();
   timer.buildTimer();
   const buttonStartAgain = createElem('buttonStartAgain', 'button', 'startAgain_btn');
   buttonStartAgain.textContent = 'Начать заново';

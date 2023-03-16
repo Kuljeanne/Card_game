@@ -13,6 +13,8 @@ if (!localStorage.getItem('level')) {
     chooseLevelModal.openModal()
 }
 
+const timer = new Timer()
+
 const cardSuits = ['clubs', 'diamonds', 'hearts', 'spades']
 const cardValues = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6']
 const allCards = []
@@ -35,15 +37,19 @@ function isGameStarted() {
             mixedCards = shuffle(makeArrayOfPairs(mixedCards, 9))
         }
         mixedCards.forEach((card) => card.render(cards))
-        setTimeout(hideCards, 5000);
+        setTimeout(() => {
+            hideCards()
+            timer.tick()
+        }, 5000)
     }
 }
 
 function renderGameWrapper() {
     const gameWrapper = createElem('gameWrapper', 'div', 'game_wrapper')
     const toolsWrapper = createElem('toolsWrapper', 'div', 'tools_wrapper')
-    const timer = new Timer()
+
     timer.buildTimer()
+
     const buttonStartAgain = createElem(
         'buttonStartAgain',
         'button',
@@ -54,6 +60,7 @@ function renderGameWrapper() {
     const gameField = createElem('gameField', 'div', 'game_field')
     gameWrapper.append(toolsWrapper)
     timer.renderTimer(toolsWrapper)
+
     toolsWrapper.append(buttonStartAgain)
     gameWrapper.append(gameField)
 

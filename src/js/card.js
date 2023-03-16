@@ -50,18 +50,26 @@ export class Card {
                         document
                             .querySelectorAll('.card-back')
                             .forEach((elem) => elem.remove())
+                        localStorage.setItem(
+                            'time',
+                            document.querySelector('.timer').textContent
+                        )
                         setTimeout(() => {
                             alert('Вы проиграли')
-                        }, 500)
+                        }, 200)
                     } else {
                         localStorage.removeItem('chosen-card')
                         this.cardWrapper.classList.remove('hidden')
                         let hiddenCardsLeft =
                             document.querySelectorAll('.hidden').length
                         if (hiddenCardsLeft === 0) {
+                            localStorage.setItem(
+                                'time',
+                                document.querySelector('.timer').textContent
+                            )
                             setTimeout(() => {
                                 alert('Вы выиграли')
-                            }, 500)
+                            }, 200)
                         }
                     }
                 }
