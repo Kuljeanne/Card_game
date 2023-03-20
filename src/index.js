@@ -1,11 +1,9 @@
+//import '../styles/style.scss'
 import { Modal } from './js/modal'
 import { Timer } from './js/timer'
 import { Card } from './js/card'
 
 const app = document.querySelector('.app')
-
-const cardSuits = ['clubs', 'diamonds', 'hearts', 'spades']
-const cardValues = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6']
 
 // open choose-level-modal
 const chooseLevelModal = new Modal('complexity-level_block')
@@ -15,6 +13,14 @@ if (!localStorage.getItem('level')) {
     chooseLevelModal.openModal()
 }
 
+const timer = new Timer()
+
+const cardSuits = ['clubs', 'diamonds', 'hearts', 'spades']
+const cardValues = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6']
+const allCards = []
+buildCards(cardSuits, cardValues, allCards)
+let mixedCards = shuffle(allCards)
+
 isGameStarted()
 
 function isGameStarted() {
@@ -23,27 +29,27 @@ function isGameStarted() {
     } else {
         app.append(renderGameWrapper())
         const cards = document.querySelector('.game_field')
-
         if (localStorage.getItem('level') === '1') {
-            renderCards(cardSuits, cardValues, cards)
-
-            console.log('easy')
+            mixedCards = shuffle(makeArrayOfPairs(mixedCards, 3))
         } else if (localStorage.getItem('level') === '2') {
-            renderCards(cardSuits, cardValues, cards)
-            hideCards()
-            console.log('middle')
+            mixedCards = shuffle(makeArrayOfPairs(mixedCards, 6))
         } else if (localStorage.getItem('level') === '3') {
-            renderCards(cardSuits, cardValues, cards)
-            console.log('hard')
+            mixedCards = shuffle(makeArrayOfPairs(mixedCards, 9))
         }
+        mixedCards.forEach((card) => card.render(cards))
+        setTimeout(() => {
+            hideCards()
+            timer.tick()
+        }, 5000)
     }
 }
 
 function renderGameWrapper() {
     const gameWrapper = createElem('gameWrapper', 'div', 'game_wrapper')
     const toolsWrapper = createElem('toolsWrapper', 'div', 'tools_wrapper')
-    const timer = new Timer()
+
     timer.buildTimer()
+
     const buttonStartAgain = createElem(
         'buttonStartAgain',
         'button',
@@ -54,6 +60,7 @@ function renderGameWrapper() {
     const gameField = createElem('gameField', 'div', 'game_field')
     gameWrapper.append(toolsWrapper)
     timer.renderTimer(toolsWrapper)
+
     toolsWrapper.append(buttonStartAgain)
     gameWrapper.append(gameField)
 
@@ -70,23 +77,42 @@ function startAgain() {
     window.location.reload()
 }
 
-function renderCards(suits, values, container) {
+function buildCards(suits, values, array) {
     for (let i = 0; i < suits.length; i++) {
         for (let j = 0; j < values.length; j++) {
             const card = new Card()
-
             card.build(suits[i], values[j])
-            card.render(container)
+            array.push(card)
         }
     }
 }
-function hideCards(){
-    document.querySelectorAll('.card').forEach(card=>{
-        card.textContent = ''
+function makeArrayOfPairs(array, length) {
+    array.length = length
+    let cloneArray = []
+    array.forEach((item) => {
+        let clone = new Card()
+        clone.build(item.suit, item.value)
+        cloneArray.push(clone)
+    })
+
+    return [array, cloneArray].flat()
+}
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1))
+        ;[array[i], array[j]] = [array[j], array[i]]
+    }
+    return array
+}
+
+function hideCards() {
+    document.querySelectorAll('.card').forEach((card) => {
+        card.classList.add('hidden')
         card.append(createBackCard())
     })
 }
 
-function createBackCard(){
+function createBackCard() {
     return createElem('back', 'div', 'card-back')
 }

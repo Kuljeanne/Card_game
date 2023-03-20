@@ -1,4 +1,5 @@
 .card {
+    position: relative;
     height: 133px;
     width: 9%;
     padding: 6px;
@@ -37,9 +38,17 @@
 }
 
 .card-back {
-    height: 100%;
+    position: absolute;
+    width: 85%;
+    height: 90%;
     background-color: $back-card;
-    background-image: url('../../../src/img/mask.png');
+    background-image: url('../src/img/mask.png');
     background-size: cover;
     border-radius: 4px;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: all 0.5s;
 }
