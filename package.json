@@ -1,11 +1,30 @@
 {
-  "name": "course4",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "kuljeanne",
-  "license": "ISC"
+    "name": "course4",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "webpack --mode development",
+        "prod": "webpack --mode production",
+        "format": "prettier --write .",
+        "lint:js": "eslint ./src/**/*.js",
+        "lint:scss": "stylelint ./styles/**/*.scss",
+        "lint": "npm run lint:js && npm run lint:scss",
+        "prepare": "husky install"
+    },
+    "author": "kuljeanne@gmail.com",
+    "license": "ISC",
+    "devDependencies": {
+        "eslint": "^8.35.0",
+        "eslint-config-prettier": "^8.7.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "husky": "^8.0.3",
+        "prettier": "2.8.4",
+        "stylelint": "^15.2.0",
+        "stylelint-config-prettier-scss": "^0.0.1",
+        "stylelint-config-standard-scss": "^7.0.1",
+        "stylelint-prettier": "^3.0.0",
+        "webpack": "^5.76.0",
+        "webpack-cli": "^5.0.1"
+    }
 }

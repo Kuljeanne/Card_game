@@ -1,11 +1,11 @@
 @font-face {
-  font-family: "StratosSkyeng";
+  font-family: StratosSkyeng;
   src: url("../../../src/fonts/statosskyeng-v1.001/Desktop fonts/stratosskyeng-regular.otf") format("OpenType"), url("../../../src/fonts/statosskyeng-v1.001/Web fonts/stratosskyengweb-regular.woff") format("woff"), url("../../../src/fonts/statosskyeng-v1.001/Web fonts/stratosskyengweb-regular.woff2") format("woff2"), url("../../../src/fonts/__MACOSX/statosskyeng-v1.001/Web fonts/._stratosskyengweb-regular.woff") format("woff"), url("../../../src/fonts/__MACOSX/statosskyeng-v1.001/Desktop fonts/._stratosskyeng-regular.otf") format("OpenType");
   font-weight: normal;
   font-style: normal;
 }
 .app {
-  font-family: "StratosSkyeng", Verdana, sans-serif;
+  font-family: StratosSkyeng, Verdana, sans-serif;
 }
 
 .complexity-level_option:hover, .complexity-level_option {
@@ -21,13 +21,20 @@ html {
   padding: 0;
 }
 
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-color: #004980;
+}
+
 .app {
   padding: 22px;
   box-sizing: border-box;
-  background-color: #004980;
   font-feature-settings: "pnum" on, "lnum" on;
-  width: 100vw;
-  height: 100vh;
+  max-width: 1100px;
 }
 
 h2 {
@@ -39,8 +46,8 @@ h2 {
 }
 
 button {
-  background-color: #7AC100;
-  color: #FFFFFF;
+  background-color: #7ac100;
+  color: #fff;
   font-size: 2.4rem;
   font-style: normal;
   font-weight: normal;
@@ -78,7 +85,7 @@ button:active {
   box-sizing: border-box;
   width: 480px;
   height: 459px;
-  background-color: #C2F5FF;
+  background-color: #c2f5ff;
   border-radius: 12px;
   padding: 50px 69px;
   display: flex;
@@ -115,8 +122,8 @@ button:active {
   font-style: normal;
   font-weight: normal;
   line-height: 7.2rem;
-  color: #0080C1;
-  background: #FFFFFF;
+  color: #0080c1;
+  background: #fff;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -125,8 +132,8 @@ button:active {
 }
 
 .complexity-level_option:hover {
-  background: #0080C1;
-  color: #FFFFFF;
+  background: #0080c1;
+  color: #fff;
 }
 
 .complexity-level_options > input {
@@ -135,14 +142,14 @@ button:active {
 }
 
 input:checked + label {
-  background: #0080C1;
-  color: #FFFFFF;
+  background: #0080c1;
+  color: #fff;
 }
 
 .error {
   position: absolute;
   top: -30px;
-  color: #ff0000;
+  color: #f00;
   font-size: 2rem;
   font-style: normal;
   font-weight: normal;
@@ -151,4 +158,102 @@ input:checked + label {
 
 .error__hidden {
   display: none;
+}
+
+.tools_wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timer_wrapper {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+.time_desc {
+  display: flex;
+  flex-direction: row;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.6rem;
+  font-feature-settings: "pnum" on, "lnum" on;
+  padding-right: 5px;
+}
+
+.desc {
+  width: 50%;
+  text-align: right;
+}
+
+.min {
+  padding-right: 10px;
+}
+
+.timer {
+  font-size: 6.4rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 6.4rem;
+}
+
+.game_field {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.card {
+  height: 133px;
+  width: 9%;
+  padding: 6px;
+  box-sizing: border-box;
+  color: #000;
+  background: #fff;
+  border-radius: 4px;
+  font-size: 2.4rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 3.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card_top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-start;
+}
+
+.suit-mini {
+  width: 7px;
+}
+
+.card_center {
+  align-self: center;
+  width: 25px;
+}
+
+.card_bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-end;
+  transform: rotate(180deg);
+}
+
+.card-back {
+  height: 100%;
+  background-color: #e4fbff;
+  background-image: url("../../../src/img/mask.png");
+  background-size: cover;
+  border-radius: 4px;
 }/*# sourceMappingURL=style.css.map */

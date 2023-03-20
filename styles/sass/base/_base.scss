@@ -7,17 +7,22 @@ html {
     padding: 0;
 }
 
+body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color: $main-color;
+}
+
 .app {
     padding: 22px;
     box-sizing: border-box;
-    background-color: $main-color;
     font-feature-settings: 'pnum' on, 'lnum' on;
     @extend %font-main;
-    width: 100vw;
-    height: 100vh;
+    max-width: 1100px;
 }
-
-
 
 h2 {
     @include font($size: 4rem, $height: 4.8rem);
@@ -40,7 +45,7 @@ button:hover {
 }
 
 button:active {
-    transform: scale(.97);
+    transform: scale(0.97);
 }
 
 .modal_wrapper {
@@ -57,7 +62,6 @@ button:active {
 }
 
 .modal_block {
-  
     opacity: 1;
     box-sizing: border-box;
     width: 480px;
@@ -69,5 +73,4 @@ button:active {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-
 }
