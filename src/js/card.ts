@@ -1,72 +1,84 @@
 export class Card {
-    constructor() {
-        this.card = ''
-        this.cardWrapper = ''
-        this.top = ''
-        this.center = ''
-        this.bottom = ''
+    _suit: string
+    _value: string
+    _card: string
+    _cardWrapper!: HTMLElement
+    _top!: HTMLElement
+    _center!: HTMLElement
+    _bottom!: HTMLElement
+
+    constructor(suit: string, value: string) {
+        this._suit = suit
+        this._value = value
+        this._card = `${suit}:${value}`
     }
 
-    build(suit:string, value:string) {
-        this.suit = suit
-        this.value = value
-        this.card = `${suit}:${value}`
-        this.cardWrapper = this.createDomNode(this.cardWrapper, 'div', 'card')
-        this.top = this.createDomNode(this.top, 'div', 'card_top')
-        this.top.innerHTML = `<span>${value}</span><img class="suit-mini" src= "img/${suit}.svg" alt="${suit}">`
-        this.center = this.createDomNode(this.top, 'img', 'card_center')
-        this.center.src = `img/${suit}.svg`
-        this.center.alt = `${suit}:${value}`
-        this.bottom = this.createDomNode(this.top, 'div', 'card_bottom')
-        this.bottom.innerHTML = `<span>${value}</span><img class="suit-mini" src= "img/${suit}.svg" alt="${suit}">`
+    build() {
+        this._cardWrapper = this.createDomNode(this._cardWrapper, 'div', 'card')
+        this._top = this.createDomNode(this._top, 'div', 'card_top')
+        this._top.innerHTML = `<span>${this._value}</span><img class="suit-mini" src= "img/${this._suit}.svg" alt="${this._suit}">`
+        this._center = this.createDomNode(this._top, 'div', 'card_center')
+        this._center.innerHTML = `<img src="img/${this._suit}.svg" alt = "${this._card}">` 
+        this._bottom = this.createDomNode(this._top, 'div', 'card_bottom')
+        this._bottom.innerHTML = `<span>${this._value}</span><img class="suit-mini" src= "img/${this._suit}.svg" alt="${this._suit}">`
         this.onclick()
         this.appendElements()
     }
 
-    createDomNode(node, elemHTML, classes) {
+    createDomNode(
+        node: HTMLElement,
+        elemHTML: string,
+        classes?: string | string[],
+    ): HTMLElement {
         node = document.createElement(elemHTML)
-        node.classList.add(classes)
+        node.classList.add(classes as string)
+
         return node
     }
     appendElements() {
-        this.cardWrapper.append(this.top)
-        this.cardWrapper.append(this.center)
-        this.cardWrapper.append(this.bottom)
+        this._cardWrapper.append(this._top)
+        this._cardWrapper.append(this._center)
+        this._cardWrapper.append(this._bottom)
     }
 
-    render(container) {
-        container.append(this.cardWrapper)
+    render(container: HTMLElement) {
+        container.append(this._cardWrapper)
     }
 
     onclick() {
-        this.cardWrapper.addEventListener('click', () => {
-            if (this.cardWrapper.classList.contains('hidden')) {
-                this.cardWrapper.querySelector('.card-back').remove()
+        this._cardWrapper.addEventListener('click', () => {
+            if (this._cardWrapper.classList.contains('hidden')) {
+                let back = this._cardWrapper.querySelector(
+                    '.card-back'
+                ) as HTMLElement
+                back.remove()
                 if (!localStorage.getItem('chosen-card')) {
-                    localStorage.setItem('chosen-card', this.card)
-                    this.cardWrapper.classList.remove('hidden')
+                    localStorage.setItem('chosen-card', this._card)
+                    this._cardWrapper.classList.remove('hidden')
                 } else {
-                    if (localStorage.getItem('chosen-card') !== this.card) {
+                    let timer: HTMLElement | null =
+                        document.querySelector('.timer')
+                    if (localStorage.getItem('chosen-card') !== this._card) {
                         document
                             .querySelectorAll('.card-back')
                             .forEach((elem) => elem.remove())
-                        localStorage.setItem(
-                            'time',
-                            document.querySelector('.timer').textContent
-                        )
+                        if (timer) {
+                            let timeValue:string = '' + timer.textContent
+                            localStorage.setItem('time', timeValue)
+                        }
                         setTimeout(() => {
                             alert('Вы проиграли')
                         }, 200)
                     } else {
                         localStorage.removeItem('chosen-card')
-                        this.cardWrapper.classList.remove('hidden')
-                        let hiddenCardsLeft =
+                        this._cardWrapper.classList.remove('hidden')
+                        let hiddenCardsLeft:number =
                             document.querySelectorAll('.hidden').length
                         if (hiddenCardsLeft === 0) {
-                            localStorage.setItem(
-                                'time',
-                                document.querySelector('.timer').textContent
-                            )
+                            if (timer) {
+                                let timeValue:string = '' + timer.textContent
+                                localStorage.setItem('time', timeValue)
+                            }
                             setTimeout(() => {
                                 alert('Вы выиграли')
                             }, 200)

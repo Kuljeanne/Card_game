@@ -84,12 +84,13 @@ export class Modal {
         }
     }
 
-    isLevelChosen(data: any) {
+    isLevelChosen(data: FormData) {
         if (data.get('complexity-level') === null) {
             let error = this._modal.querySelector('.error') as HTMLElement
             error.classList.remove('error__hidden')
         } else {
-            localStorage.setItem('level', data.get('complexity-level'))
+            let level: File | string | null = data.get('complexity-level')
+            localStorage.setItem('level', level as string)
             this.closeModal()
         }
     }

@@ -12,25 +12,19 @@
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Card = void 0;
 class Card {
-    constructor() {
-        this.card = '';
-        this.cardWrapper = '';
-        this.top = '';
-        this.center = '';
-        this.bottom = '';
+    constructor(suit, value) {
+        this._suit = suit;
+        this._value = value;
+        this._card = `${suit}:${value}`;
     }
-    build(suit, value) {
-        this.suit = suit;
-        this.value = value;
-        this.card = `${suit}:${value}`;
-        this.cardWrapper = this.createDomNode(this.cardWrapper, 'div', 'card');
-        this.top = this.createDomNode(this.top, 'div', 'card_top');
-        this.top.innerHTML = `<span>${value}</span><img class="suit-mini" src= "img/${suit}.svg" alt="${suit}">`;
-        this.center = this.createDomNode(this.top, 'img', 'card_center');
-        this.center.src = `img/${suit}.svg`;
-        this.center.alt = `${suit}:${value}`;
-        this.bottom = this.createDomNode(this.top, 'div', 'card_bottom');
-        this.bottom.innerHTML = `<span>${value}</span><img class="suit-mini" src= "img/${suit}.svg" alt="${suit}">`;
+    build() {
+        this._cardWrapper = this.createDomNode(this._cardWrapper, 'div', 'card');
+        this._top = this.createDomNode(this._top, 'div', 'card_top');
+        this._top.innerHTML = `<span>${this._value}</span><img class="suit-mini" src= "img/${this._suit}.svg" alt="${this._suit}">`;
+        this._center = this.createDomNode(this._top, 'div', 'card_center');
+        this._center.innerHTML = `<img src="img/${this._suit}.svg" alt = "${this._card}">`;
+        this._bottom = this.createDomNode(this._top, 'div', 'card_bottom');
+        this._bottom.innerHTML = `<span>${this._value}</span><img class="suit-mini" src= "img/${this._suit}.svg" alt="${this._suit}">`;
         this.onclick();
         this.appendElements();
     }
@@ -40,37 +34,45 @@ class Card {
         return node;
     }
     appendElements() {
-        this.cardWrapper.append(this.top);
-        this.cardWrapper.append(this.center);
-        this.cardWrapper.append(this.bottom);
+        this._cardWrapper.append(this._top);
+        this._cardWrapper.append(this._center);
+        this._cardWrapper.append(this._bottom);
     }
     render(container) {
-        container.append(this.cardWrapper);
+        container.append(this._cardWrapper);
     }
     onclick() {
-        this.cardWrapper.addEventListener('click', () => {
-            if (this.cardWrapper.classList.contains('hidden')) {
-                this.cardWrapper.querySelector('.card-back').remove();
+        this._cardWrapper.addEventListener('click', () => {
+            if (this._cardWrapper.classList.contains('hidden')) {
+                let back = this._cardWrapper.querySelector('.card-back');
+                back.remove();
                 if (!localStorage.getItem('chosen-card')) {
-                    localStorage.setItem('chosen-card', this.card);
-                    this.cardWrapper.classList.remove('hidden');
+                    localStorage.setItem('chosen-card', this._card);
+                    this._cardWrapper.classList.remove('hidden');
                 }
                 else {
-                    if (localStorage.getItem('chosen-card') !== this.card) {
+                    let timer = document.querySelector('.timer');
+                    if (localStorage.getItem('chosen-card') !== this._card) {
                         document
                             .querySelectorAll('.card-back')
                             .forEach((elem) => elem.remove());
-                        localStorage.setItem('time', document.querySelector('.timer').textContent);
+                        if (timer) {
+                            let timeValue = '' + timer.textContent;
+                            localStorage.setItem('time', timeValue);
+                        }
                         setTimeout(() => {
                             alert('Вы проиграли');
                         }, 200);
                     }
                     else {
                         localStorage.removeItem('chosen-card');
-                        this.cardWrapper.classList.remove('hidden');
+                        this._cardWrapper.classList.remove('hidden');
                         let hiddenCardsLeft = document.querySelectorAll('.hidden').length;
                         if (hiddenCardsLeft === 0) {
-                            localStorage.setItem('time', document.querySelector('.timer').textContent);
+                            if (timer) {
+                                let timeValue = '' + timer.textContent;
+                                localStorage.setItem('time', timeValue);
+                            }
                             setTimeout(() => {
                                 alert('Вы выиграли');
                             }, 200);
@@ -160,7 +162,8 @@ class Modal {
             error.classList.remove('error__hidden');
         }
         else {
-            localStorage.setItem('level', data.get('complexity-level'));
+            let level = data.get('complexity-level');
+            localStorage.setItem('level', level);
             this.closeModal();
         }
     }
@@ -346,9 +349,11 @@ function startAgain() {
 }
 function buildCards(suits, values, array) {
     for (let i = 0; i < suits.length; i++) {
+        console.log(suits[i]);
         for (let j = 0; j < values.length; j++) {
-            const card = new card_1.Card();
-            card.build(suits[i], values[j]);
+            const card = new card_1.Card(suits[i], values[j]);
+            card.build();
+            console.log(card.build());
             array.push(card);
         }
     }
@@ -357,9 +362,10 @@ function makeArrayOfPairs(array, length) {
     array.length = length;
     let cloneArray = [];
     array.forEach((item) => {
-        let clone = new card_1.Card();
-        clone.build(item.suit, item.value);
+        let clone = new card_1.Card(item.suit, item.value);
+        clone.build();
         cloneArray.push(clone);
+        console.log(clone);
     });
     return [array, cloneArray].flat();
 }

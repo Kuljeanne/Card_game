@@ -3,7 +3,7 @@ import { Modal } from './js/modal'
 import { Timer } from './js/timer'
 import { Card } from './js/card'
 
-const app = document.querySelector('.app')
+const app: HTMLElement | null = document.querySelector('.app')
 
 // open choose-level-modal
 const chooseLevelModal = new Modal('complexity-level_block')
@@ -13,13 +13,13 @@ if (!localStorage.getItem('level')) {
     chooseLevelModal.openModal()
 }
 
-const timer = new Timer()
+const timer: Timer = new Timer()
 
-const cardSuits:string[] = ['clubs', 'diamonds', 'hearts', 'spades']
-const cardValues:string[] = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6']
-const allCards = []
+const cardSuits: string[] = ['clubs', 'diamonds', 'hearts', 'spades']
+const cardValues: string[] = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6']
+const allCards: Modal[] = []
 buildCards(cardSuits, cardValues, allCards)
-let mixedCards = shuffle(allCards)
+let mixedCards: Modal[] = shuffle(allCards)
 
 isGameStarted()
 
@@ -79,9 +79,11 @@ function startAgain() {
 
 function buildCards(suits, values, array) {
     for (let i = 0; i < suits.length; i++) {
+        console.log(suits[i])
         for (let j = 0; j < values.length; j++) {
-            const card = new Card()
-            card.build(suits[i], values[j])
+            const card = new Card(suits[i], values[j])
+            card.build()
+            console.log(card.build())
             array.push(card)
         }
     }
@@ -90,9 +92,10 @@ function makeArrayOfPairs(array, length) {
     array.length = length
     let cloneArray = []
     array.forEach((item) => {
-        let clone = new Card()
-        clone.build(item.suit, item.value)
+        let clone = new Card(item.suit, item.value)
+        clone.build()
         cloneArray.push(clone)
+        console.log(clone)
     })
 
     return [array, cloneArray].flat()
