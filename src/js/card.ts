@@ -18,7 +18,7 @@ export class Card {
         this._top = this.createDomNode(this._top, 'div', 'card_top')
         this._top.innerHTML = `<span>${this._value}</span><img class="suit-mini" src= "img/${this._suit}.svg" alt="${this._suit}">`
         this._center = this.createDomNode(this._top, 'div', 'card_center')
-        this._center.innerHTML = `<img src="img/${this._suit}.svg" alt = "${this._card}">` 
+        this._center.innerHTML = `<img src="img/${this._suit}.svg" alt = "${this._card}">`
         this._bottom = this.createDomNode(this._top, 'div', 'card_bottom')
         this._bottom.innerHTML = `<span>${this._value}</span><img class="suit-mini" src= "img/${this._suit}.svg" alt="${this._suit}">`
         this.onclick()
@@ -28,20 +28,20 @@ export class Card {
     createDomNode(
         node: HTMLElement,
         elemHTML: string,
-        classes?: string | string[],
+        classes?: string | string[]
     ): HTMLElement {
         node = document.createElement(elemHTML)
         node.classList.add(classes as string)
 
         return node
     }
-    appendElements():void {
+    appendElements(): void {
         this._cardWrapper.append(this._top)
         this._cardWrapper.append(this._center)
         this._cardWrapper.append(this._bottom)
     }
 
-    render(container: HTMLElement):void {
+    render(container: HTMLElement): void {
         container.append(this._cardWrapper)
     }
 
@@ -67,7 +67,7 @@ export class Card {
                             localStorage.setItem('time', timeValue)
                         }
                         setTimeout(() => {
-                            alert('Вы проиграли')
+                            localStorage.setItem('result', 'loss')
                         }, 200)
                     } else {
                         localStorage.removeItem('chosen-card')
@@ -80,7 +80,7 @@ export class Card {
                                 localStorage.setItem('time', timeValue)
                             }
                             setTimeout(() => {
-                                alert('Вы выиграли')
+                                localStorage.setItem('result', 'win')
                             }, 200)
                         }
                     }

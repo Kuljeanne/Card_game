@@ -2,7 +2,7 @@
 import { Modal } from './js/modal'
 import { Timer } from './js/timer'
 import { Card } from './js/card'
-
+import { ModalFinal } from './js/madalFinal'
 
 const app: HTMLElement | null = document.querySelector('.app')
 
@@ -22,12 +22,15 @@ const allCards: Card[] = []
 buildCards(cardSuits, cardValues, allCards)
 let mixedCards: Card[] = shuffle(allCards)
 
-isGameStarted()
+gameStart()
 
-function isGameStarted() {
+
+gameFinished()
+
+function gameStart() {
     if (app) {
         if (!localStorage.getItem('level')) {
-            setTimeout(isGameStarted, 500)
+            setTimeout(gameStart, 500)
         } else {
             app.append(renderGameWrapper())
             const cards: HTMLElement | null =
@@ -115,4 +118,20 @@ function hideCards(): void {
 
 function createBackCard(): HTMLElement {
     return createElem('div', 'card-back')
+}
+
+function gameFinished(): void {
+    if (!localStorage.getItem('result')) {
+        setTimeout(gameFinished, 500)
+    }else{
+        gameFinal()
+    }
+
+}
+
+function gameFinal():void{
+    let modal = new ModalFinal('result_block_win', 'win')
+    modal.buildModal('Вы выиграли!')
+    modal.openModal()
+    
 }

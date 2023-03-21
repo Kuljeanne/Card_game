@@ -1,12 +1,12 @@
 export class Modal {
-    _classes: string[]
+    _classes: string
     _modal!: HTMLElement
     _modalTitle!: HTMLElement
     _modalContent!: HTMLElement
     _modalBtn!: HTMLElement | null
     _wrapper!: HTMLElement
 
-    constructor(...classes: string[]) {
+    constructor(classes: string) {
         this._classes = classes
     }
 
@@ -79,6 +79,7 @@ export class Modal {
                     this.isLevelChosen(formData)
                 } else {
                     localStorage.clear()
+                    window.location.reload()
                 }
             })
         }

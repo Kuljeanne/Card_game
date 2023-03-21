@@ -61,7 +61,7 @@ class Card {
                             localStorage.setItem('time', timeValue);
                         }
                         setTimeout(() => {
-                            alert('Вы проиграли');
+                            localStorage.setItem('result', 'loss');
                         }, 200);
                     }
                     else {
@@ -74,7 +74,7 @@ class Card {
                                 localStorage.setItem('time', timeValue);
                             }
                             setTimeout(() => {
-                                alert('Вы выиграли');
+                                localStorage.setItem('result', 'win');
                             }, 200);
                         }
                     }
@@ -84,6 +84,49 @@ class Card {
     }
 }
 exports.Card = Card;
+
+
+/***/ }),
+
+/***/ "./src/js/madalFinal.ts":
+/*!******************************!*\
+  !*** ./src/js/madalFinal.ts ***!
+  \******************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ModalFinal = void 0;
+const modal_1 = __webpack_require__(/*! ./modal */ "./src/js/modal.ts");
+class ModalFinal extends modal_1.Modal {
+    // _modal!: HTMLElement
+    // _modalTitle!: HTMLElement
+    // _modalContent!: HTMLElement
+    // _modalBtn!: HTMLElement | null
+    // _wrapper!: HTMLElement
+    constructor(classes, result) {
+        super(classes);
+        this._result = result;
+    }
+    buildModal(title) {
+        this._wrapper = this.createDomNode(this._wrapper, 'div', 'modal_wrapper');
+        this._modal = this.createDomNode(this._modal, 'div', this._classes);
+        this._modal.classList.add('modal_block');
+        this._icon = this.createDomNode(this._modal, 'div', `${this._result}`);
+        this._icon.innerHTML = `<img src = "img/${this._result}.svg" alt = "${this._result}">`;
+        this._modal.append(this._icon);
+        this._modalTitle = this.createDomNode(this._modalTitle, 'h2');
+        this._modalTitle.textContent = title;
+        this._modalContent = this.createDomNode(this._modalContent, 'div', 'game_data');
+        this._modalContent.innerHTML = `<h3>Затраченное время</h3><p class = "time-spent">${localStorage.getItem('time')}</p>`;
+        this.appendsModalElements();
+        this._modalBtn = this.createDomNode(this._modal, 'button');
+        this._modalBtn.textContent = 'Играть Снова';
+        this._modal.append(this._modalBtn);
+        this.bindEvents();
+    }
+}
+exports.ModalFinal = ModalFinal;
 
 
 /***/ }),
@@ -98,7 +141,7 @@ exports.Card = Card;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Modal = void 0;
 class Modal {
-    constructor(...classes) {
+    constructor(classes) {
         this._classes = classes;
     }
     buildModal(title) {
@@ -152,6 +195,7 @@ class Modal {
                 }
                 else {
                     localStorage.clear();
+                    window.location.reload();
                 }
             });
         }
@@ -285,6 +329,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const modal_1 = __webpack_require__(/*! ./js/modal */ "./src/js/modal.ts");
 const timer_1 = __webpack_require__(/*! ./js/timer */ "./src/js/timer.ts");
 const card_1 = __webpack_require__(/*! ./js/card */ "./src/js/card.ts");
+const madalFinal_1 = __webpack_require__(/*! ./js/madalFinal */ "./src/js/madalFinal.ts");
 const app = document.querySelector('.app');
 // open choose-level-modal
 const chooseLevelModal = new modal_1.Modal('complexity-level_block');
@@ -298,11 +343,12 @@ const cardValues = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6'];
 const allCards = [];
 buildCards(cardSuits, cardValues, allCards);
 let mixedCards = shuffle(allCards);
-isGameStarted();
-function isGameStarted() {
+gameStart();
+gameFinished();
+function gameStart() {
     if (app) {
         if (!localStorage.getItem('level')) {
-            setTimeout(isGameStarted, 500);
+            setTimeout(gameStart, 500);
         }
         else {
             app.append(renderGameWrapper());
@@ -381,6 +427,19 @@ function hideCards() {
 }
 function createBackCard() {
     return createElem('div', 'card-back');
+}
+function gameFinished() {
+    if (!localStorage.getItem('result')) {
+        setTimeout(gameFinished, 500);
+    }
+    else {
+        gameFinal();
+    }
+}
+function gameFinal() {
+    let modal = new madalFinal_1.ModalFinal('result_block_win', 'win');
+    modal.buildModal('Вы выиграли!');
+    modal.openModal();
 }
 
 })();
