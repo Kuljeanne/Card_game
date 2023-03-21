@@ -35,17 +35,17 @@ export class Card {
 
         return node
     }
-    appendElements() {
+    appendElements():void {
         this._cardWrapper.append(this._top)
         this._cardWrapper.append(this._center)
         this._cardWrapper.append(this._bottom)
     }
 
-    render(container: HTMLElement) {
+    render(container: HTMLElement):void {
         container.append(this._cardWrapper)
     }
 
-    onclick() {
+    onclick():void {
         this._cardWrapper.addEventListener('click', () => {
             if (this._cardWrapper.classList.contains('hidden')) {
                 let back = this._cardWrapper.querySelector(

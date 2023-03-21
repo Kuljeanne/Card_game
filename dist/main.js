@@ -187,18 +187,17 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Timer = void 0;
 class Timer {
     constructor() {
-        this.wrapper = '';
-        this.desc = '';
-        this.time = '';
-        this.min = 0;
-        this.sec = 0;
+        this._min = 0;
+        this._sec = 0;
+        this._min = 0;
+        this._sec = 0;
     }
     buildTimer() {
-        this.wrapper = this.createDomNode(this.wrapper, 'div', 'timer_wrapper');
-        this.desc = this.createDomNode(this.desc, 'div', 'time_desc');
-        this.desc.innerHTML = `<div class="desc min">min</div><div class="desc">sec</div>`;
-        this.time = this.createDomNode(this.time, 'div', 'timer');
-        this.time.textContent = '00.00';
+        this._wrapper = this.createDomNode(this._wrapper, 'div', 'timer_wrapper');
+        this._desc = this.createDomNode(this._desc, 'div', 'time_desc');
+        this._desc.innerHTML = `<div class="desc min">min</div><div class="desc">sec</div>`;
+        this._time = this.createDomNode(this._time, 'div', 'timer');
+        this._time.textContent = '00.00';
         this.appendElements();
     }
     createDomNode(node, elemHTML, classes) {
@@ -207,27 +206,26 @@ class Timer {
         return node;
     }
     appendElements() {
-        this.wrapper.append(this.desc);
-        this.wrapper.append(this.time);
+        this._wrapper.append(this._desc);
+        this._wrapper.append(this._time);
     }
     renderTimer(container) {
-        container.append(this.wrapper);
+        container.append(this._wrapper);
     }
     tick() {
-        this.sec++;
-        if (this.sec >= 60) {
-            this.sec = 0;
-            this.min++;
+        this._sec++;
+        if (this._sec >= 60) {
+            this._sec = 0;
+            this._min++;
         }
-        this.time.textContent = (this.min > 9 ? this.min : '0' + this.min) + ':' + (this.sec > 9 ? this.sec : '0' + this.sec);
+        this._time.textContent = (this._min > 9 ? this._min : '0' + this._min) + ':' + (this._sec > 9 ? this._sec : '0' + this._sec);
         this.timer();
     }
     timer() {
-        this.t = setTimeout(this.tick.bind(this), 1000);
-        return this.t;
+        this._timerStart = setTimeout(this.tick.bind(this), 1000);
     }
     stop() {
-        clearTimeout(this.t);
+        clearTimeout(this._timerStart);
     }
 }
 exports.Timer = Timer;
@@ -302,44 +300,46 @@ buildCards(cardSuits, cardValues, allCards);
 let mixedCards = shuffle(allCards);
 isGameStarted();
 function isGameStarted() {
-    if (!localStorage.getItem('level')) {
-        setTimeout(isGameStarted, 500);
-    }
-    else {
-        app.append(renderGameWrapper());
-        const cards = document.querySelector('.game_field');
-        if (localStorage.getItem('level') === '1') {
-            mixedCards = shuffle(makeArrayOfPairs(mixedCards, 3));
+    if (app) {
+        if (!localStorage.getItem('level')) {
+            setTimeout(isGameStarted, 500);
         }
-        else if (localStorage.getItem('level') === '2') {
-            mixedCards = shuffle(makeArrayOfPairs(mixedCards, 6));
+        else {
+            app.append(renderGameWrapper());
+            const cards = document.querySelector('.game_field');
+            if (localStorage.getItem('level') === '1') {
+                mixedCards = shuffle(makeArrayOfPairs(mixedCards, 3));
+            }
+            else if (localStorage.getItem('level') === '2') {
+                mixedCards = shuffle(makeArrayOfPairs(mixedCards, 6));
+            }
+            else if (localStorage.getItem('level') === '3') {
+                mixedCards = shuffle(makeArrayOfPairs(mixedCards, 9));
+            }
+            mixedCards.forEach((card) => card.render(cards));
+            setTimeout(() => {
+                hideCards();
+                timer.tick();
+            }, 5000);
         }
-        else if (localStorage.getItem('level') === '3') {
-            mixedCards = shuffle(makeArrayOfPairs(mixedCards, 9));
-        }
-        mixedCards.forEach((card) => card.render(cards));
-        setTimeout(() => {
-            hideCards();
-            timer.tick();
-        }, 5000);
     }
 }
 function renderGameWrapper() {
-    const gameWrapper = createElem('gameWrapper', 'div', 'game_wrapper');
-    const toolsWrapper = createElem('toolsWrapper', 'div', 'tools_wrapper');
+    const gameWrapper = createElem('div', 'game_wrapper');
+    const toolsWrapper = createElem('div', 'tools_wrapper');
     timer.buildTimer();
-    const buttonStartAgain = createElem('buttonStartAgain', 'button', 'startAgain_btn');
+    const buttonStartAgain = createElem('button', 'startAgain_btn');
     buttonStartAgain.textContent = 'Начать заново';
     buttonStartAgain.addEventListener('click', startAgain);
-    const gameField = createElem('gameField', 'div', 'game_field');
+    const gameField = createElem('div', 'game_field');
     gameWrapper.append(toolsWrapper);
     timer.renderTimer(toolsWrapper);
     toolsWrapper.append(buttonStartAgain);
     gameWrapper.append(gameField);
     return gameWrapper;
 }
-function createElem(node, elemHTML, classes) {
-    node = document.createElement(elemHTML);
+function createElem(elemHTML, classes) {
+    const node = document.createElement(elemHTML);
     node.classList.add(classes);
     return node;
 }
@@ -349,11 +349,9 @@ function startAgain() {
 }
 function buildCards(suits, values, array) {
     for (let i = 0; i < suits.length; i++) {
-        console.log(suits[i]);
         for (let j = 0; j < values.length; j++) {
             const card = new card_1.Card(suits[i], values[j]);
             card.build();
-            console.log(card.build());
             array.push(card);
         }
     }
@@ -362,10 +360,9 @@ function makeArrayOfPairs(array, length) {
     array.length = length;
     let cloneArray = [];
     array.forEach((item) => {
-        let clone = new card_1.Card(item.suit, item.value);
+        let clone = new card_1.Card(item._suit, item._value);
         clone.build();
         cloneArray.push(clone);
-        console.log(clone);
     });
     return [array, cloneArray].flat();
 }
@@ -383,7 +380,7 @@ function hideCards() {
     });
 }
 function createBackCard() {
-    return createElem('back', 'div', 'card-back');
+    return createElem('div', 'card-back');
 }
 
 })();
