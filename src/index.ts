@@ -24,7 +24,6 @@ let mixedCards: Card[] = shuffle(allCards)
 
 gameStart()
 
-
 gameFinished()
 
 function gameStart() {
@@ -123,15 +122,22 @@ function createBackCard(): HTMLElement {
 function gameFinished(): void {
     if (!localStorage.getItem('result')) {
         setTimeout(gameFinished, 500)
-    }else{
+    } else {
+        timer.stop()
         gameFinal()
     }
-
 }
 
-function gameFinal():void{
-    let modal = new ModalFinal('result_block_win', 'win')
-    modal.buildModal('Вы выиграли!')
-    modal.openModal()
-    
+function gameFinal(): void {
+
+    if (localStorage.getItem('result') === 'win') {
+        let modal = new ModalFinal('result_block_win', 'win')
+        modal.buildModal('Вы выиграли!')
+        modal.openModal()
+    } else {
+            let modal = new ModalFinal('result_block_win', 'loss')
+            modal.buildModal('Вы проиграли!')
+            modal.openModal()
+        
+    }
 }

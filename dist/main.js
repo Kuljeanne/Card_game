@@ -60,9 +60,7 @@ class Card {
                             let timeValue = '' + timer.textContent;
                             localStorage.setItem('time', timeValue);
                         }
-                        setTimeout(() => {
-                            localStorage.setItem('result', 'loss');
-                        }, 200);
+                        localStorage.setItem('result', 'loss');
                     }
                     else {
                         localStorage.removeItem('chosen-card');
@@ -73,9 +71,7 @@ class Card {
                                 let timeValue = '' + timer.textContent;
                                 localStorage.setItem('time', timeValue);
                             }
-                            setTimeout(() => {
-                                localStorage.setItem('result', 'win');
-                            }, 200);
+                            localStorage.setItem('result', 'win');
                         }
                     }
                 }
@@ -99,11 +95,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ModalFinal = void 0;
 const modal_1 = __webpack_require__(/*! ./modal */ "./src/js/modal.ts");
 class ModalFinal extends modal_1.Modal {
-    // _modal!: HTMLElement
-    // _modalTitle!: HTMLElement
-    // _modalContent!: HTMLElement
-    // _modalBtn!: HTMLElement | null
-    // _wrapper!: HTMLElement
     constructor(classes, result) {
         super(classes);
         this._result = result;
@@ -433,13 +424,21 @@ function gameFinished() {
         setTimeout(gameFinished, 500);
     }
     else {
+        timer.stop();
         gameFinal();
     }
 }
 function gameFinal() {
-    let modal = new madalFinal_1.ModalFinal('result_block_win', 'win');
-    modal.buildModal('Вы выиграли!');
-    modal.openModal();
+    if (localStorage.getItem('result') === 'win') {
+        let modal = new madalFinal_1.ModalFinal('result_block_win', 'win');
+        modal.buildModal('Вы выиграли!');
+        modal.openModal();
+    }
+    else {
+        let modal = new madalFinal_1.ModalFinal('result_block_win', 'loss');
+        modal.buildModal('Вы проиграли!');
+        modal.openModal();
+    }
 }
 
 })();

@@ -3,11 +3,6 @@ import { Modal } from './modal'
 export class ModalFinal extends Modal {
     _icon!: HTMLElement
     _result!: string
-    // _modal!: HTMLElement
-    // _modalTitle!: HTMLElement
-    // _modalContent!: HTMLElement
-    // _modalBtn!: HTMLElement | null
-    // _wrapper!: HTMLElement
 
     constructor(classes: string, result: string) {
         super(classes)
@@ -24,7 +19,7 @@ export class ModalFinal extends Modal {
         this._modal.classList.add('modal_block')
 
         this._icon = this.createDomNode(this._modal, 'div', `${this._result}`)
-        this._icon.innerHTML = `<img src = "img/${this._result}.svg" alt = "${this._result}">`
+        this._icon.innerHTML = `<img src = "img/${this._result}.png" alt = "${this._result}">`
         this._modal.append(this._icon)
 
         this._modalTitle = this.createDomNode(this._modalTitle, 'h2')
@@ -35,16 +30,16 @@ export class ModalFinal extends Modal {
             'div',
             'game_data'
         )
-        this._modalContent.innerHTML= `<h3>Затраченное время</h3><p class = "time-spent">${localStorage.getItem('time')}</p>`
+        this._modalContent.innerHTML = `<h3>Затраченное время</h3><p class = "time-spent">${localStorage.getItem(
+            'time'
+        )}</p>`
 
         this.appendsModalElements()
 
         this._modalBtn = this.createDomNode(this._modal, 'button')
         this._modalBtn.textContent = 'Играть Снова'
-        this._modal.append(this._modalBtn) 
+        this._modal.append(this._modalBtn)
 
         this.bindEvents()
     }
-    
-
 }

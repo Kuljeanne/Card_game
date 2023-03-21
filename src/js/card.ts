@@ -66,9 +66,7 @@ export class Card {
                             let timeValue:string = '' + timer.textContent
                             localStorage.setItem('time', timeValue)
                         }
-                        setTimeout(() => {
-                            localStorage.setItem('result', 'loss')
-                        }, 200)
+                        localStorage.setItem('result', 'loss')
                     } else {
                         localStorage.removeItem('chosen-card')
                         this._cardWrapper.classList.remove('hidden')
@@ -79,9 +77,7 @@ export class Card {
                                 let timeValue:string = '' + timer.textContent
                                 localStorage.setItem('time', timeValue)
                             }
-                            setTimeout(() => {
-                                localStorage.setItem('result', 'win')
-                            }, 200)
+                            localStorage.setItem('result', 'win')
                         }
                     }
                 }
