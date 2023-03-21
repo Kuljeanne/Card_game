@@ -7,7 +7,7 @@ export class Card {
         this.bottom = ''
     }
 
-    build(suit, value) {
+    build(suit:string, value:string) {
         this.suit = suit
         this.value = value
         this.card = `${suit}:${value}`

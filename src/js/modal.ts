@@ -1,30 +1,36 @@
 export class Modal {
-    constructor(...classes) {
-        this.classes = classes
-        this.modal = ''
-        this.modalTitle = ''
-        this.modalContent = ''
-        this.modalBtn = ''
-        this.wrapper = ''
+    _classes: string[]
+    _modal!: HTMLElement
+    _modalTitle!: HTMLElement
+    _modalContent!: HTMLElement
+    _modalBtn!: HTMLElement | null
+    _wrapper!: HTMLElement
+
+    constructor(...classes: string[]) {
+        this._classes = classes
     }
 
-    buildModal(title) {
-        this.wrapper = this.createDomNode(this.wrapper, 'div', 'modal_wrapper')
+    buildModal(title: string) {
+        this._wrapper = this.createDomNode(
+            this._wrapper,
+            'div',
+            'modal_wrapper'
+        )
 
-        this.modal = this.createDomNode(this.modal, 'div', this.classes)
-        this.modal.classList.add('modal_block')
+        this._modal = this.createDomNode(this._modal, 'div', this._classes)
+        this._modal.classList.add('modal_block')
 
-        this.modalTitle = this.createDomNode(this.modalTitle, 'h2')
-        this.modalTitle.textContent = title
+        this._modalTitle = this.createDomNode(this._modalTitle, 'h2')
+        this._modalTitle.textContent = title
 
-        if (this.modal.classList.contains('complexity-level_block')) {
-            this.modalTitle.classList.add('complexity-level_title')
-            this.modalContent = this.createDomNode(
-                this.modalContent,
+        if (this._modal.classList.contains('complexity-level_block')) {
+            this._modalTitle.classList.add('complexity-level_title')
+            this._modalContent = this.createDomNode(
+                this._modalContent,
                 'form',
                 'complexity-level_choose'
             )
-            this.modalContent.innerHTML = `<div class = "error error__hidden">Необходимо выбрать сложность</div><div class="complexity-level_options">
+            this._modalContent.innerHTML = `<div class = "error error__hidden">Необходимо выбрать сложность</div><div class="complexity-level_options">
             <input type="radio" name="complexity-level" value="1" id="complexity-level_easy">
             <label class="complexity-level_option" for="complexity-level_easy">1</label>
             <input type="radio" name="complexity-level" value="2" id="complexity-level_medium">
@@ -36,46 +42,52 @@ export class Modal {
 
         this.appendsModalElements()
 
-        this.modalBtn = this.findBtn()
+        this._modalBtn = this.findBtn()
 
         this.bindEvents()
     }
 
-    createDomNode(node, elemHTML, classes) {
+    createDomNode(node: HTMLElement, elemHTML:string, classes?:string | string[]): HTMLElement {
         node = document.createElement(elemHTML)
-        if (classes) node.classList.add(classes)
+        if (classes) node.classList.add(classes as string)
         return node
     }
 
     appendsModalElements() {
-        this.wrapper.append(this.modal)
-        this.modal.append(this.modalTitle)
-        this.modal.append(this.modalContent)
+        this._wrapper.append(this._modal)
+        this._modal.append(this._modalTitle)
+        this._modal.append(this._modalContent)
     }
 
     openModal() {
-        document.querySelector('.app').append(this.wrapper)
+        const app: HTMLElement | null = document.querySelector('.app')
+        if (app) app.append(this._wrapper)
     }
 
     findBtn() {
-        return this.modal.querySelector('button')
+        return this._modal.querySelector('button')
     }
 
     bindEvents() {
-        this.modalBtn.addEventListener('click', (event) => {
-            event.preventDefault()
-            if (this.modal.querySelector('form')) {
-                const formData = new FormData(this.modal.querySelector('form'))
-                this.isLevelChosen(formData)
-            } else {
-                localStorage.clear()
-            }
-        })
+        if (this._modalBtn) {
+            this._modalBtn.addEventListener('click', (event) => {
+                event.preventDefault()
+                if (this._modal.querySelector('form')) {
+                    const formData = new FormData(
+                        this._modal.querySelector('form') as HTMLFormElement
+                    )
+                    this.isLevelChosen(formData)
+                } else {
+                    localStorage.clear()
+                }
+            })
+        }
     }
 
-    isLevelChosen(data) {
+    isLevelChosen(data: any) {
         if (data.get('complexity-level') === null) {
-            this.modal.querySelector('.error').classList.remove('error__hidden')
+            let error = this._modal.querySelector('.error') as HTMLElement
+            error.classList.remove('error__hidden')
         } else {
             localStorage.setItem('level', data.get('complexity-level'))
             this.closeModal()
@@ -83,6 +95,6 @@ export class Modal {
     }
 
     closeModal() {
-        this.wrapper.remove()
+        this._wrapper.remove()
     }
 }

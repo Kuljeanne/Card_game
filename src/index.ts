@@ -15,8 +15,8 @@ if (!localStorage.getItem('level')) {
 
 const timer = new Timer()
 
-const cardSuits = ['clubs', 'diamonds', 'hearts', 'spades']
-const cardValues = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6']
+const cardSuits:string[] = ['clubs', 'diamonds', 'hearts', 'spades']
+const cardValues:string[] = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6']
 const allCards = []
 buildCards(cardSuits, cardValues, allCards)
 let mixedCards = shuffle(allCards)

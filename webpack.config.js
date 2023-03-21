@@ -7,6 +7,7 @@ module.exports = (env, options) => {
     const isProd = options.mode === 'production'
     const config = {
         devtool: isProd ? false : 'source-map',
+        watch: true,
         entry: ['./src/index.ts', './styles/style.scss'],
         resolve: {
             extensions: ['.tsx', '.ts', '.js'],

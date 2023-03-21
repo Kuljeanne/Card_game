@@ -20,7 +20,7 @@ export class Timer {
 
     }
 
-    createDomNode(node, elemHTML, classes) {
+    createDomNode(node, elemHTML:string, classes:string) {
         node = document.createElement(elemHTML)
         node.classList.add(classes)
         return node
