@@ -8,8 +8,9 @@
         "dev": "webpack --mode development",
         "prod": "webpack --mode production",
         "format": "prettier --write .",
+        "lint:ts": "eslint ./src/**/*.ts",
         "lint:scss": "stylelint ./styles/**/*.scss",
-        "lint": "npm run lint:scss",
+        "lint": "npm run lint:ts && npm run lint:scss",
         "prepare": "husky install"
     },
     "author": "kuljeanne@gmail.com",
@@ -17,6 +18,8 @@
     "devDependencies": {
         "@babel/core": "^7.21.3",
         "@babel/preset-env": "^7.20.2",
+        "@typescript-eslint/eslint-plugin": "^5.56.0",
+        "@typescript-eslint/parser": "^5.56.0",
         "babel-loader": "^9.1.2",
         "copy-webpack-plugin": "^11.0.0",
         "css-loader": "^6.7.3",

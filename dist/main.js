@@ -44,20 +44,20 @@ class Card {
     onclick() {
         this._cardWrapper.addEventListener('click', () => {
             if (this._cardWrapper.classList.contains('hidden')) {
-                let back = this._cardWrapper.querySelector('.card-back');
+                const back = this._cardWrapper.querySelector('.card-back');
                 back.remove();
                 if (!localStorage.getItem('chosen-card')) {
                     localStorage.setItem('chosen-card', this._card);
                     this._cardWrapper.classList.remove('hidden');
                 }
                 else {
-                    let timer = document.querySelector('.timer');
+                    const timer = document.querySelector('.timer');
                     if (localStorage.getItem('chosen-card') !== this._card) {
                         document
                             .querySelectorAll('.card-back')
                             .forEach((elem) => elem.remove());
                         if (timer) {
-                            let timeValue = '' + timer.textContent;
+                            const timeValue = '' + timer.textContent;
                             localStorage.setItem('time', timeValue);
                         }
                         localStorage.setItem('result', 'loss');
@@ -65,10 +65,10 @@ class Card {
                     else {
                         localStorage.removeItem('chosen-card');
                         this._cardWrapper.classList.remove('hidden');
-                        let hiddenCardsLeft = document.querySelectorAll('.hidden').length;
+                        const hiddenCardsLeft = document.querySelectorAll('.hidden').length;
                         if (hiddenCardsLeft === 0) {
                             if (timer) {
-                                let timeValue = '' + timer.textContent;
+                                const timeValue = '' + timer.textContent;
                                 localStorage.setItem('time', timeValue);
                             }
                             localStorage.setItem('result', 'win');
@@ -104,7 +104,7 @@ class ModalFinal extends modal_1.Modal {
         this._modal = this.createDomNode(this._modal, 'div', this._classes);
         this._modal.classList.add('modal_block');
         this._icon = this.createDomNode(this._modal, 'div', `${this._result}`);
-        this._icon.innerHTML = `<img src = "img/${this._result}.svg" alt = "${this._result}">`;
+        this._icon.innerHTML = `<img src = "img/${this._result}.png" alt = "${this._result}">`;
         this._modal.append(this._icon);
         this._modalTitle = this.createDomNode(this._modalTitle, 'h2');
         this._modalTitle.textContent = title;
@@ -193,11 +193,11 @@ class Modal {
     }
     isLevelChosen(data) {
         if (data.get('complexity-level') === null) {
-            let error = this._modal.querySelector('.error');
+            const error = this._modal.querySelector('.error');
             error.classList.remove('error__hidden');
         }
         else {
-            let level = data.get('complexity-level');
+            const level = data.get('complexity-level');
             localStorage.setItem('level', level);
             this.closeModal();
         }
@@ -395,9 +395,9 @@ function buildCards(suits, values, array) {
 }
 function makeArrayOfPairs(array, length) {
     array.length = length;
-    let cloneArray = [];
+    const cloneArray = [];
     array.forEach((item) => {
-        let clone = new card_1.Card(item._suit, item._value);
+        const clone = new card_1.Card(item._suit, item._value);
         clone.build();
         cloneArray.push(clone);
     });
@@ -405,7 +405,7 @@ function makeArrayOfPairs(array, length) {
 }
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
+        const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
@@ -430,12 +430,12 @@ function gameFinished() {
 }
 function gameFinal() {
     if (localStorage.getItem('result') === 'win') {
-        let modal = new madalFinal_1.ModalFinal('result_block_win', 'win');
+        const modal = new madalFinal_1.ModalFinal('result_block_win', 'win');
         modal.buildModal('Вы выиграли!');
         modal.openModal();
     }
     else {
-        let modal = new madalFinal_1.ModalFinal('result_block_win', 'loss');
+        const modal = new madalFinal_1.ModalFinal('result_block_win', 'loss');
         modal.buildModal('Вы проиграли!');
         modal.openModal();
     }

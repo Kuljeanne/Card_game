@@ -90,9 +90,9 @@ function buildCards(suits: string[], values: string[], array: Card[]): void {
 }
 function makeArrayOfPairs(array: Card[], length: number): Card[] {
     array.length = length
-    let cloneArray: Card[] = []
+    const cloneArray: Card[] = []
     array.forEach((item) => {
-        let clone: Card = new Card(item._suit, item._value)
+        const clone: Card = new Card(item._suit, item._value)
         clone.build()
         cloneArray.push(clone)
     })
@@ -102,7 +102,7 @@ function makeArrayOfPairs(array: Card[], length: number): Card[] {
 
 function shuffle(array: Card[]): Card[] {
     for (let i: number = array.length - 1; i > 0; i--) {
-        let j: number = Math.floor(Math.random() * (i + 1))
+        const j: number = Math.floor(Math.random() * (i + 1))
         ;[array[i], array[j]] = [array[j], array[i]]
     }
     return array
@@ -129,15 +129,13 @@ function gameFinished(): void {
 }
 
 function gameFinal(): void {
-
     if (localStorage.getItem('result') === 'win') {
-        let modal = new ModalFinal('result_block_win', 'win')
+        const modal = new ModalFinal('result_block_win', 'win')
         modal.buildModal('Вы выиграли!')
         modal.openModal()
     } else {
-            let modal = new ModalFinal('result_block_win', 'loss')
-            modal.buildModal('Вы проиграли!')
-            modal.openModal()
-        
+        const modal = new ModalFinal('result_block_win', 'loss')
+        modal.buildModal('Вы проиграли!')
+        modal.openModal()
     }
 }

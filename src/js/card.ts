@@ -48,7 +48,7 @@ export class Card {
     onclick():void {
         this._cardWrapper.addEventListener('click', () => {
             if (this._cardWrapper.classList.contains('hidden')) {
-                let back = this._cardWrapper.querySelector(
+                const back = this._cardWrapper.querySelector(
                     '.card-back'
                 ) as HTMLElement
                 back.remove()
@@ -56,25 +56,25 @@ export class Card {
                     localStorage.setItem('chosen-card', this._card)
                     this._cardWrapper.classList.remove('hidden')
                 } else {
-                    let timer: HTMLElement | null =
+                    const timer: HTMLElement | null =
                         document.querySelector('.timer')
                     if (localStorage.getItem('chosen-card') !== this._card) {
                         document
                             .querySelectorAll('.card-back')
                             .forEach((elem) => elem.remove())
                         if (timer) {
-                            let timeValue:string = '' + timer.textContent
+                            const timeValue:string = '' + timer.textContent
                             localStorage.setItem('time', timeValue)
                         }
                         localStorage.setItem('result', 'loss')
                     } else {
                         localStorage.removeItem('chosen-card')
                         this._cardWrapper.classList.remove('hidden')
-                        let hiddenCardsLeft:number =
+                        const hiddenCardsLeft:number =
                             document.querySelectorAll('.hidden').length
                         if (hiddenCardsLeft === 0) {
                             if (timer) {
-                                let timeValue:string = '' + timer.textContent
+                                const timeValue:string = '' + timer.textContent
                                 localStorage.setItem('time', timeValue)
                             }
                             localStorage.setItem('result', 'win')

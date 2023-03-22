@@ -2,8 +2,8 @@ export class Timer {
         _wrapper!: HTMLElement
         _desc!: HTMLElement
         _time!: HTMLElement
-        _min:number = 0
-        _sec:number = 0
+        _min = 0
+        _sec = 0
         _timerStart!: ReturnType<typeof setTimeout>
 
     constructor() {
