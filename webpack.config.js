@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
@@ -7,11 +8,14 @@ module.exports = (env, options) => {
     const isProd = options.mode === 'production'
     const config = {
         devtool: isProd ? false : 'source-map',
-        entry: ['./src/index.js', './styles/style.scss'],
+        watch: true,
+        entry: ['./src/index.ts', './styles/style.scss'],
+        resolve: {
+            extensions: ['.tsx', '.ts', '.js'],
+        },
         output: {
             filename: 'main.js',
-            path: path.join(__dirname, 'dist'),
-            clean: true,
+            path: path.resolve(__dirname, 'dist'),
         },
         devServer: {
             compress: true,
@@ -20,16 +24,9 @@ module.exports = (env, options) => {
         module: {
             rules: [
                 {
-                    test: /\.js$/,
+                    test: /\.tsx?$/,
+                    use: 'ts-loader',
                     exclude: /node_modules/,
-                    use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: [
-                                ['@babel/preset-env', { targets: 'defaults' }],
-                            ],
-                        },
-                    },
                 },
                 {
                     test: /\.scss$/,
