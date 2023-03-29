@@ -1,5 +1,5 @@
 import { it, expect } from "@jest/globals";
-import { Card } from "../src/js/card";
+import { Card } from "../src/ts/card";
 import {shuffle } from "./func-for-tests"
 
 it('should return card object', () => {

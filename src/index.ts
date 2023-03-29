@@ -1,8 +1,8 @@
 //import '../styles/style.scss'
-import { Modal } from './js/modal'
-import { Timer } from './js/timer'
-import { Card } from './js/card'
-import { ModalFinal } from './js/madalFinal'
+import { Modal } from './ts/modal'
+import { Timer } from './ts/timer'
+import { Card } from './ts/card'
+import { ModalFinal } from './ts/madalFinal'
 
 const app: HTMLElement | null = document.querySelector('.app')
 

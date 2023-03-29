@@ -1,4 +1,4 @@
-import { Card } from "../src/js/card"
+import { Card } from "../src/ts/card"
 
 export function makeArrayOfPairs(array: Card[], length: number): Card[] {
     array.length = length
